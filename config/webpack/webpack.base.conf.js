@@ -8,7 +8,7 @@ module.exports = (() => ({
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader',
-				exculde: /node_modules/,
+				exclude: /node_modules/,
 				options: {
 					cssSourceMap: isProduction,
 					preserveWhitespace: true,

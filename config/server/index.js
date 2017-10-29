@@ -1,20 +1,25 @@
 const
-	path = require('path'),
-	setMiddlewareOptions = (name, config) => ({name, config});
+path = require('path'),
+middleware = (name, config) => ({name, config}),
+staticRoot = path.resolve(__dirname, '..', '..', 'static');
 
 module.exports = (() => {
-	return {
-		port: 80,
-		middlewares: [
-			setMiddlewareOptions('webpack', {
-				entry: path.resolve(__dirname, '..', '..', 'assets', 'index.js'),
-				output: {
-					output: path.resolve(__dirname, '..', '..', 'static'),
-					fileName: '[name].js'
-				},
-				htmlTemplate: path.resolve(__dirname, '..', '..', 'assets', 'html', 'template.html'),
-				htmlFileName: 'page.html'
-			})
-		]
-	};
+return {
+	port: 80,
+	middlewares: [
+		middleware('webpack', {
+			staticPath: '/static',
+			entry: {
+				app: path.resolve(__dirname, '..', '..', 'assets', 'index.js')
+			},
+			output: {
+				path: staticRoot,
+				filename: '[name].js',
+				publicPath: '/static/'
+			},
+			htmlTemplate: path.resolve(__dirname, '..', '..', 'assets', 'html', 'template.html'),
+			htmlFileName: 'page.html'
+		})
+	]
+};
 })();

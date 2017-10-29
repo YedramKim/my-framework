@@ -10,11 +10,10 @@ const
 	const
 		server = new Server(config.server);
 
-	server.addMiddleware((req, res, next) => {
-		res.send('첫 노가다 작품');
-	});
-
 	server.listen().then(() => {
 		console.log('서버가 실행되었습니다.');
+	}).catch((err) => {
+		console.log('에러 발생. 아 왜~~~~!');
+		console.log(err);
 	});
 })();
