@@ -1,2 +1,7 @@
+import vue from 'vue';
+import App from './components/App.vue';
 
-console.log('aa');
+new vue({
+	render: (h) => h(App),
+	el: '#app'
+});

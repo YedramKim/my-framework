@@ -6,7 +6,9 @@ middleware.meta = {
 	routeMiddleware: false,
 	name: '',
 	// true일 경우 true 이고 production.env.NODE_ENV가 production일 때 productionProcess를 사용해야 함
-	separateProduction: false
+	separateProduction: false,
+	// true일 경우 별개의 라우트를 반환한다는 의미입니다.
+	returnRoute: true
 };
 
 // 일반적으로 사용할 미들웨어 적용 메서드
