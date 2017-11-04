@@ -4,10 +4,11 @@ const
 	static = require('serve-static'),
 	merge = require('webpack-merge'),
 	webpack = require('webpack'),
+	ExtractTextPlugin = require('extract-text-webpack-plugin'),
 	HTMLWebpackPlugin = require('html-webpack-plugin'),
-	webpackConfig = process.env.NODE_ENV === 'production' ? require('../../../config/webpack/webpack.dev.conf') :
-	process.env.NODE_ENV === 'test' ? require('../../../config/webpack/webpack.dev.conf') :
-	require('../../../config/webpack/webpack.dev.conf');
+	webpackConfig = process.env.NODE_ENV === 'production' ? require('./webpack/webpack.prod.conf') :
+	process.env.NODE_ENV === 'test' ? require('./webpack/webpack.dev.conf') :
+	require('./webpack/webpack.dev.conf');
 
 const middleware = module.exports = {};
 
@@ -16,20 +17,13 @@ middleware.meta = {
 	// true 일 경우 route 설정에서만 사용 가능한 미들웨어, name은 라우트에서 가져올 때 구분할 미들웨어의 이름
 	routeMiddleware: false,
 	name: '',
-	// true일 경우 true 이고 production.env.NODE_ENV가 production일 때 productionProcess를 사용해야 함
-	separateProduction: true,
-	returnRoute: true
+	separateProduction: true
 };
 
-// 일반적으로 사용할 미들웨어 적용 메서드
-// 매개변수
-// => [1]: express 서버
-// => [2]: 미들웨어에 사용할 config 객체
-// => [3]: Server 객체
 middleware.process = async (app, { staticPath, entry, output, htmlTemplate, htmlFileName }) => {
 	const
 		config = merge({
-			entry,
+			entry: setHotModule(entry),
 			output
 		}, webpackConfig),
 		htmlPlugin = new HTMLWebpackPlugin({
@@ -61,8 +55,7 @@ middleware.process = async (app, { staticPath, entry, output, htmlTemplate, html
 	return true;
 };
 
-// production.env.NODE_ENV가 production이고 separateProduction가 true일 때 사용하는 메서드
-middleware.productionProcess = async (app, { staticPath, entry, output, htmlTemplate, htmlFileName }) => {
+middleware.productionProcess = async (app, { staticPath, entry, output, htmlTemplate, htmlFileName, cssFileName }) => {
 	const
 		config = merge({
 			entry,
@@ -72,29 +65,56 @@ middleware.productionProcess = async (app, { staticPath, entry, output, htmlTemp
 		htmlPlugin = new HTMLWebpackPlugin({
 			template: htmlTemplate,
 			filename: htmlFileName,
+			inject: true,
 			minify: {
 				minifyCSS: true,
 				minifyJS: true,
 				removeComments: true
 			}
+		}),
+		extractTextPlugin = new ExtractTextPlugin({
+			filename: 'style.css',
+			allChunks: true
 		});
 
 	htmlPlugin.apply(compile);
-	// config.plugins.push(htmlPlugin);
-	config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+	extractTextPlugin.apply(compile);
 	await fs.emptyDir(output.path);
-	return new Promise((res, rej) => {
+	await new Promise((res, rej) => {
 		compile.run((err, stats) => {
-			if (err || stats.hasErrors()) {
+			if (err) {
+				console.log('webpack compile failed');
 				rej(err);
+			} else if (stats.hasErrors()) {
+				console.log('webpack compile failed');
+				rej(stats.toString({
+					colors: true,
+					reasons: true
+				}));
 			} else {
 				console.log('webpack compile complete');
-				app.use('/static', static(output.path));
-				app.use((req, res) => {
-					res.sendFile(path.join(output.path, 'page.html'));
-				});
 				res();
 			}
 		});
 	});
+	app.use('/static', static(output.path));
+	app.use((req, res) => {
+		res.sendFile(path.join(output.path, 'page.html'));
+	});
+};
+
+const setHotModule = (entry) => {
+	const
+		entryType = typeof entry,
+		hotModule = 'webpack-hot-middleware/client?noInfo=true&reload=true';
+	if (Array.isArray(entryType)) {
+		console.log('case 1', entry);
+		return [hotModule, ...entry];
+	} else if (entryType === 'object') {
+		const newEntry = {};
+		for (let file in entry) {
+			newEntry[file] = [hotModule, entry[file]];
+		}
+		return newEntry;
+	}	
 };

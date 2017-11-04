@@ -18,7 +18,8 @@ return {
 				publicPath: '/static/'
 			},
 			htmlTemplate: path.resolve(__dirname, '..', '..', 'assets', 'html', 'template.html'),
-			htmlFileName: 'page.html'
+			htmlFileName: 'page.html',
+			cssFileName: 'style.css'
 		})
 	]
 };

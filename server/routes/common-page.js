@@ -1,14 +1,17 @@
 const path = require('path');
-const route = module.exports = {};
+const route = {};
 
 route.method = 'get';
 
 route.url = '*';
 
-route.route = (req, res) => {
-	if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
+	route.route = (req, res) => {
 		res.sendFile(path.resolve(__dirname, '..', 'dev.html'));
-	} else {
+	}
+} else {
+	route.route = (req, res) => {
 		res.sendFile(path.resolve(__dirname, '..', '..', 'static', 'page.html'));
 	}
-};
+}
+module.exports = route;

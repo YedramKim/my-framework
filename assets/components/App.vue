@@ -5,22 +5,17 @@
 </template>
 
 <script>
-export default {
-	is: 'app'
-};
+	export default {
+		name: 'App'
+	};
 </script>
-
-
-<style scoped>
-	.app {
-		font-size: 30px;
-	}
-</style>
 
 <style lang="less" scoped>
 	.app {
+		font-size: 30px;
 		span {
 			color: #f00;
+			font-weight: bold;
 		}
 	}
 </style>

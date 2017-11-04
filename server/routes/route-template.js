@@ -1,5 +1,5 @@
 const path = require('path');
-const route = module.exports = {};
+const route = {};
 
 //사용할 method
 route.method = 'get';
@@ -11,3 +11,4 @@ route.url = '/aaa';
 route.route = (req, res) => {
 	res.send('라우트 템플릿입니다.');
 };
+module.exports = route;

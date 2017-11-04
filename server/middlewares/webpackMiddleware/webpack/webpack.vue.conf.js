@@ -1,3 +1,5 @@
+const createStyleLoader = require('../utils/create-style-loader');
+
 module.exports = [
 	{
 		test: /\.vue$/,
@@ -7,7 +9,8 @@ module.exports = [
 			cssSourceMap: process.env.NODE_ENV === 'production',
 			preserveWhitespace: true,
 			loaders: {
-				less: ['vue-style-loader', 'css-loader', 'less-loader']
+				css: createStyleLoader(false, true),
+				less: createStyleLoader('less', true)
 			},
 			transformToRequire: {
 				img: 'src',
