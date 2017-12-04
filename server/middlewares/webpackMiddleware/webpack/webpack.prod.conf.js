@@ -1,7 +1,6 @@
-const
-	webpack = require('webpack'),
-	merge = require('webpack-merge'),
-	baseConfig = require('./webpack.base.conf');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.conf');
 
 baseConfig.module.rules.push({
 	test: /\.(vue|js)$/,
@@ -12,7 +11,11 @@ module.exports = merge(baseConfig, {
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin({
 			sourceMap: true,
-			test: /\.(js)$/
+			test: /\.(js)$/,
+			compress: true,
+			uglifyOptions: {
+				ecma: 8
+			}
 		})
 	]
 });

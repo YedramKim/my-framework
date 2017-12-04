@@ -5,7 +5,7 @@ const
 
 module.exports = (() => {
 	const productConfig = {
-		devtool: '#eval-source-map',
+		devtool: '#source-map',
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
 			new webpack.DefinePlugin({

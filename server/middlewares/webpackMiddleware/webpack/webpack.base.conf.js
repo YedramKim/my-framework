@@ -1,17 +1,13 @@
 const
 	webpack = require('webpack'),
+	vueRule = require('./webpack.vue.conf'),
 	isProduction = process.env.NODE_ENV === 'production';
 let rules = [];
-if (process.env.CLIENT_LIBRARY === 'vue') {
-	rules = require('./webpack.vue.conf');
-} else if (process.env.CLIENT_LIBRARY === 'react') {
-	rules = require('./webpack.react.conf');
-}
 
 rules = [
-	...rules,
+	vueRule,
 	{
-		test: /\.(png|jpg|gif|svg)$/,
+		test: /\.(png|jpg|gif|svg|otf|ttf)$/,
 		loader: 'file-loader',
 		options: {
 			name: '[name].[ext]'
@@ -26,9 +22,9 @@ rules = [
 
 module.exports = (() => ({
 	resolve: {
-		extensions: ['.js', '.vue', '.json'],
+		extensions: ['.ts', '.js', '.vue', '.json'],
 		alias: {
-				'vue$': 'vue/dist/vue.esm.js'
+			'vue$': 'vue/dist/vue.esm.js'
 		}
 	},
 	module: {

@@ -6,13 +6,12 @@
  "author": "YedarmKim <oncoder@naver.com>",
  "license": "MIT",
  "scripts": {
-  "dev": "yarn vue-dev",
-  "production": "yarn vue-production",
-  "vue-dev": "cross-env NODE_ENV=development cross-env CLIENT_LIBRARY=vue node index.js",
-  "vue-production": "cross-env NODE_ENV=production cross-env CLIENT_LIBRARY=vue node index"
+  "dev": "cross-env NODE_ENV=development cross-env node index.js",
+  "production": "cross-env NODE_ENV=production cross-env node index"
  },
  "devDependencies": {
   "babel-loader": "^7.1.2",
+  "babel-plugin-transform-class-properties": "^6.24.1",
   "babel-plugin-transform-decorators": "^6.24.1",
   "babel-plugin-transform-object-rest-spread": "^6.26.0",
   "css-loader": "^0.28.7",
