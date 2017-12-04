@@ -1,5 +1,5 @@
 <template>
-	<div class="app" v-on:click="increment">
+	<div class="app" @click="increment">
 		<vue-mario></vue-mario>
 		<h1>Vue다 냥</h1>
 		<ul class="links">
@@ -20,7 +20,6 @@
 <script>
 	import Vue from 'vue';
 	import { mapState, Store } from 'vuex';
-	import Component from 'vue-class-component';
 	import subComponent from './sub-component.vue';
 	import VueMario from './common/vue-mario.vue';
 
@@ -31,7 +30,7 @@
 		},
 		methods: {
 			increment () {
-				// this.$store.commit('increment', 2, 1, 2);
+				this.$store.commit('increment', 2, 1, 2);
 			}
 		},
 		components: {

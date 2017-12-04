@@ -7,6 +7,7 @@ baseConfig.module.rules.push({
 	loader: 'babel-loader',
 	exclude: /node_modules/
 });
+
 module.exports = merge(baseConfig, {
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin({

@@ -14,7 +14,7 @@ rules = [
 		}
 	},
 	{
-		test: /\.js$/,
+		test: /\.(js|vue)$/,
 		loader: 'babel-loader',
 		exclude: /node_modules/
 	}
