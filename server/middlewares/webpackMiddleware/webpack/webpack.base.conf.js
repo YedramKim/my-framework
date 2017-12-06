@@ -7,6 +7,12 @@ let rules = [];
 rules = [
 	vueRule,
 	{
+		test: /\.(vue)$/,
+		enforce: 'post',
+		loader: 'babel-loader',
+		exclude: /node_modules/
+	},
+	{
 		test: /\.(png|jpg|gif|svg|otf|ttf)$/,
 		loader: 'file-loader',
 		options: {
@@ -14,7 +20,7 @@ rules = [
 		}
 	},
 	{
-		test: /\.(js|vue)$/,
+		test: /\.(js)$/,
 		loader: 'babel-loader',
 		exclude: /node_modules/
 	}

@@ -40,6 +40,8 @@
 	};
 </script>
 
-<style lang="less" scoped>
-	
+<style scoped>
+	.app {
+		display: block;
+	}
 </style>

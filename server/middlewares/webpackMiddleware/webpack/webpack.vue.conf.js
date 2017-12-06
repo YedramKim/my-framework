@@ -9,8 +9,7 @@ module.exports = {
 		preserveWhitespace: true,
 		loaders: {
 			css: createStyleLoader(false, true),
-			less: createStyleLoader('less', true),
-			ts: 'ts-loader'
+			less: createStyleLoader('less', true)
 		},
 		transformToRequire: {
 			img: 'src',
