@@ -8,8 +8,8 @@ module.exports = {
 		cssSourceMap: process.env.NODE_ENV === 'production',
 		preserveWhitespace: true,
 		loaders: {
-			css: createStyleLoader(false, true),
-			less: createStyleLoader('less', true)
+			// css: createStyleLoader(false, true),
+			// less: createStyleLoader('less', true)
 		},
 		transformToRequire: {
 			img: 'src',

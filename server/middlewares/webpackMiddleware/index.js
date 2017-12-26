@@ -25,7 +25,7 @@ middleware.process = async (app, { staticPath, entry, output, htmlTemplate, html
 		config = merge({
 			entry: setHotModule(entry),
 			output
-		}, webpackConfig),
+		}, webpackConfig);
 		htmlPlugin = new HTMLWebpackPlugin({
 			template: htmlTemplate,
 			filename: path.join(staticPath, htmlFileName),
@@ -61,24 +61,24 @@ middleware.productionProcess = async (app, { staticPath, entry, output, htmlTemp
 			entry,
 			output
 		}, webpackConfig),
-		compile = webpack(config),
-		htmlPlugin = new HTMLWebpackPlugin({
-			template: htmlTemplate,
-			filename: htmlFileName,
-			inject: true,
-			minify: {
-				minifyCSS: true,
-				minifyJS: true,
-				removeComments: true
-			}
-		}),
-		extractTextPlugin = new ExtractTextPlugin({
-			filename: 'style.css',
-			allChunks: true
-		});
+		compile = webpack(config);
+		// htmlPlugin = new HTMLWebpackPlugin({
+		// 	template: htmlTemplate,
+		// 	filename: htmlFileName,
+		// 	inject: true,
+		// 	minify: {
+		// 		minifyCSS: true,
+		// 		minifyJS: true,
+		// 		removeComments: true
+		// 	}
+		// }),
+		// extractTextPlugin = new ExtractTextPlugin({
+		// 	filename: 'style.css',
+		// 	allChunks: true
+		// });
 
-	htmlPlugin.apply(compile);
-	extractTextPlugin.apply(compile);
+	// htmlPlugin.apply(compile);
+	// extractTextPlugin.apply(compile);
 	await fs.emptyDir(output.path);
 	await new Promise((res, rej) => {
 		compile.run((err, stats) => {
