@@ -2,15 +2,14 @@ if (!process.env.NODE_ENV) {
 	process.env.NODE_ENV = 'development';
 }
 
-const
-	Server = require('./server'),
-	config = require('./config');
+console.log(process.env.NODE_ENV);
+const Server = require('./server');
 
-(() => {
-	const
-		server = new Server(config.server);
+(async () => {
+	const config = require('./config');
+	const server = new Server(config.server);
 
-	server.listen().then(() => {
+	server.start().then(() => {
 		console.log('서버가 실행되었습니다.');
 	}).catch((err) => {
 		console.log('에러 발생. 아 왜~~~~!');

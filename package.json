@@ -6,8 +6,8 @@
  "author": "YedarmKim <oncoder@naver.com>",
  "license": "MIT",
  "scripts": {
-  "dev": "cross-env NODE_ENV=development cross-env node index.js",
-  "production": "cross-env NODE_ENV=production cross-env node index"
+  "dev": "cross-env NODE_ENV=development node index.js",
+  "production": "cross-env NODE_ENV=production node index.js"
  },
  "devDependencies": {
   "babel-loader": "^7.1.2",
@@ -40,6 +40,7 @@
   "fs-extra": "^4.0.2",
   "html-webpack-plugin": "^2.30.1",
   "less": "^2.7.3",
+  "lodash": "^4.17.4",
   "node-less": "^1.0.0",
   "react": "^16.0.0",
   "react-dom": "^16.0.0",
