@@ -1,4 +1,4 @@
-const createStyleLoader = require('../utils/create-style-loader');
+// const createStyleLoader = require('../utils/create-style-loader');
 
 module.exports = {
 	test: /\.vue$/,

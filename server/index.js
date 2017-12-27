@@ -21,7 +21,7 @@ module.exports = class Server {
 	async _setMiddlewares () {
 		const middlewares = this.config.middlewares;
 		for (let middleware in middlewares) {
-			require(path.join(__dirname, 'middlewares', middleware, middleware))(this.app, middlewares[middleware]);
+			await require(path.join(__dirname, 'middlewares', middleware, middleware))(this.app, middlewares[middleware]);
 		}
 	}
 

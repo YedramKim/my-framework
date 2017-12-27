@@ -7,7 +7,8 @@ module.exports = (() => {
 			port: 80,
 			middlewares: {
 				webpack: {
-					entry: path.join(__dirname, '..', 'assets', 'index.js')
+					entry: path.join(__dirname, '..', 'assets', 'index.js'),
+					staticPath: staticPath
 				}
 			}
 		}
