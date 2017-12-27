@@ -1,1 +1,1 @@
-require('./vue');
+console.log('Hello new Framework');
