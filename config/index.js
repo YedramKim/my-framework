@@ -1,5 +1,5 @@
 const path = require('path');
-const staticPath = path.resolve(__dirname, '..', '..', 'static');
+const staticPath = path.resolve(__dirname, '..', 'static');
 
 module.exports = (() => {
 	return {
@@ -7,8 +7,12 @@ module.exports = (() => {
 			port: 80,
 			middlewares: {
 				webpack: {
-					entry: path.join(__dirname, '..', 'assets', 'index.js'),
-					staticPath: staticPath
+					entry: {
+						main: path.join(__dirname, '..', 'assets', 'index.js')
+					},
+					publicPath: '/static',
+					staticPath: staticPath,
+					layouts: path.join(__dirname, '..', 'assets', 'layout')
 				}
 			}
 		}

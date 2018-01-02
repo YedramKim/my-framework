@@ -1,16 +1,25 @@
-const
-	webpack = require('webpack'),
-	vueRule = require('./webpack.vue.conf'),
-	isProduction = process.env.NODE_ENV === 'production';
+const webpack = require('webpack');
+const isProduction = process.env.NODE_ENV === 'production';
 let rules = [];
 
 rules = [
-	vueRule,
 	{
-		test: /\.(vue)$/,
-		enforce: 'post',
-		loader: 'babel-loader',
-		exclude: /node_modules/
+		test: /\.vue$/,
+		loader: 'vue-loader',
+		exclude: /node_modules/,
+		options: {
+			cssSourceMap: isProduction,
+			preserveWhitespace: true,
+			loaders: {
+				// css: createStyleLoader(false, true),
+				// less: createStyleLoader('less', true)
+			},
+			transformToRequire: {
+				img: 'src',
+				image: 'xlink:href',
+				video: 'src'
+			}
+		}
 	},
 	{
 		test: /\.(png|jpg|gif|svg|otf|ttf)$/,

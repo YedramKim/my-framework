@@ -1,13 +1,41 @@
+const fs = require('fs-extra');
+const path = require('path');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
+const htmlPlugin = require('html-webpack-plugin');
 
-module.exports = (config) => {
-	const webpackConfig = require('./webpack.base.conf');
+module.exports = config => {
+	const webpackConfig = merge(require('./webpack.base.conf'), {
+		entry: setHotModule(config.entry),
+		output: {
+			filename: '[name].js',
+			path: config.staticPath,
+			publicPath: config.publicPath
+		},
+		devtool: 'cheap-module-eval-source-map'
+	});
+
 	const plugins = webpackConfig.plugins = webpackConfig.plugins || [];
-
-	webpackConfig.entry = setHotModule(config.entry);
-	webpackConfig.devtool = '#source-map';
 	plugins.push(new webpack.HotModuleReplacementPlugin());
-	return webpackConfig;
+
+	return fs.readdir(config.layouts).then(templates => {
+		const regExp = /\.html$/;
+		templates.forEach(template => {
+			if (!regExp.test(template)) {
+				return;
+			}
+			plugins.push(new htmlPlugin({
+				template: path.join(config.layouts, template),
+				name: template,
+				minify: {
+					minifyCSS: true,
+					minifyJS: true
+				}
+			}));
+		});
+
+		return webpackConfig;
+	});
 };
 
 const setHotModule = (entry) => {

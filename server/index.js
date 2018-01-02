@@ -13,16 +13,25 @@ module.exports = class Server {
 	async start() {
 		await this._setMiddlewares();
 		await this._setRoutes();
+		this.app.use((req, res, next) => {
+			res.send('404....');
+		});
 		return new Promise((res) => {
 			this.app.listen(this.config.port, _ => res(this));
 		});
 	}
 
 	async _setMiddlewares () {
-		const middlewares = this.config.middlewares;
-		for (let middleware in middlewares) {
-			await require(path.join(__dirname, 'middlewares', middleware, middleware))(this.app, middlewares[middleware]);
+		const middlewares = require('./middlewares');
+		const configs = this.config.middlewares;
+		const middlewarePromises = [];
+
+		for (let config in configs) {
+			let middleware = middlewares[config](this.app, configs[config]);
+			middlewarePromises.push(middleware);
 		}
+
+		return await Promise.all(middlewarePromises);
 	}
 
 	async _setRoutes () {
