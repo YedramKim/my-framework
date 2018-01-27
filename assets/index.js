@@ -1,1 +1,1 @@
-require('./vue');
+require('./vue/vue');

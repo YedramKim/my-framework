@@ -1,12 +1,7 @@
 import Vue from 'vue';
 import store from './store';
-import router from './vue-router';
+import router from './router';
 import App from './components/App';
-
-export default {
-	store,
-	router
-};
 
 new Vue({
 	el: '#app',

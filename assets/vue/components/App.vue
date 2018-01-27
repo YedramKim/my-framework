@@ -20,7 +20,6 @@
 <script>
 	import Vue from 'vue';
 	import { mapState, Store } from 'vuex';
-	import subComponent from './sub-component.vue';
 	import VueMario from './common/vue-mario.vue';
 
 	export default {
@@ -34,14 +33,17 @@
 			}
 		},
 		components: {
-			subComponent,
 			VueMario
 		}
 	};
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 	.app {
 		display: block;
+
+		.links {
+			list-style-type: none;
+		}
 	}
 </style>
