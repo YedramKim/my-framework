@@ -29,7 +29,7 @@ class Bundler {
 			}
 		}));
 		app.use(require('webpack-hot-middleware')(compile, {
-			heartbeat: 2000,
+			heartbeat: 500,
 			log: console.log
 		}));
 	}

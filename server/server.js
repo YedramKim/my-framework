@@ -10,6 +10,10 @@ module.exports = class Server {
 		this.config = config;
 	}
 
+	setStatic(url, staticPath) {
+		this.app.use(url, express.static(staticPath));
+	}
+
 	async start() {
 		await this._setMiddlewares();
 		await this._setRoutes();
