@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const UglifyJs = require('uglifyjs-webpack-plugin');
+const createStyleLoader = require('../utils/create-style-loader');
 const isProduction = process.env.NODE_ENV === 'production';
 let rules = [];
 
@@ -11,9 +12,10 @@ rules = [
 		options: {
 			cssSourceMap: isProduction,
 			preserveWhitespace: true,
+			extractCSS: isProduction,
 			loaders: {
-				// css: createStyleLoader(false, true),
-				// less: createStyleLoader('less', true)
+				css: createStyleLoader.stack('css', true),
+				less: createStyleLoader.stack('less', true)
 			},
 			transformToRequire: {
 				img: 'src',

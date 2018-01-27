@@ -12,7 +12,7 @@ module.exports = (() => {
 			},
 			publicPath: '/static',
 			staticPath: staticPath,
-			layouts: path.join(__dirname, '..', 'assets', 'layout')
+			layoutPath: path.join(__dirname, '..', 'assets', 'layout', 'app.html')
 		}
 	};
 })();

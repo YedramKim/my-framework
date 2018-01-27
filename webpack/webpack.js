@@ -1,4 +1,7 @@
+const path = require('path');
 const webpack = require('webpack');
+const cheerio = require('cheerio');
+const fse = require('fs-extra');
 
 class Bundler {
 	constructor (config) {
@@ -18,9 +21,24 @@ class Bundler {
 		} 
 	}
 
-	useMiddleware(app) {
+	async _buildHTML () {
+		const { layoutPath, publicPath, staticPath, entry } = this.config;
+		console.log(layoutPath);
+		const layout = await fse.readFile(layoutPath);
+		const $ = cheerio.load(layout);
+		const body = $('body');
+		for (let js in entry) {
+			body.append(`<script src="${publicPath}/${js}.js"></script>`);
+		}
+
+		await fse.ensureDir(staticPath);
+		await fse.writeFile(path.join(staticPath, 'index.html'), $.html());
+	}
+
+	async applyServer(app) {
 		const webpackConfig = this._getconfigure('development');
 		const compile = webpack(webpackConfig);
+
 		app.use(require('webpack-dev-middleware')(compile, {
 			noInfo: true,
 			publicPath: this.config.publicPath,
@@ -28,10 +46,13 @@ class Bundler {
 				colors: true
 			}
 		}));
+
 		app.use(require('webpack-hot-middleware')(compile, {
 			heartbeat: 500,
 			log: console.log
 		}));
+
+		await this._buildHTML();
 	}
 
 	async build() {

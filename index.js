@@ -17,10 +17,9 @@ const Webpack = require('./webpack/webpack');
 				break;
 			case 'development':
 			default:
-				bundler.useMiddleware(server.app);
+				await bundler.applyServer(server.app);
 				break;
 		}
-		bundler.useMiddleware(server.app);
 	};
 
 	try {
@@ -33,5 +32,6 @@ const Webpack = require('./webpack/webpack');
 	} catch (err) {
 		console.log('에러 발생. 아 왜~~~~!');
 		console.log(err);
+		process.exit(1);
 	}
 })();

@@ -1,3 +1,4 @@
+const htmlPlugin = require('html-webpack-plugin');
 
 module.exports = config => {
 	const baseConfig = require('./webpack.base.conf');
@@ -8,7 +9,18 @@ module.exports = config => {
 			path: config.staticPath,
 			publicPath: config.publicPath
 		},
-		devtool: 'source-map'
+		devtool: 'source-map',
+		plugins: [
+			new htmlPlugin({
+				template: config.layoutPath,
+				filename: 'index.html',
+				minify: {
+					minifyCSS: true,
+					minifyJS: true
+				}
+			}),
+			require('../utils/create-style-loader').extract
+		]
 	};
 	const merge = require('webpack-merge');
 	const mergeConfig = merge(baseConfig, prodConfig);
