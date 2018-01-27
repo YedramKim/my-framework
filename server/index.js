@@ -57,8 +57,4 @@ module.exports = class Server {
 			});
 		}));
 	}
-
-	setMiddleware(setCallback) {
-		setCallback(this.app);
-	}
 };

@@ -1,18 +1,23 @@
 
 module.exports = config => {
+	const webpack = require('webpack');
 	const baseConfig = require('./webpack.base.conf');
-	const merge = require('webpack-merge');
-	const config = require({
-		entry: config.entry,
+	const devConfig = {
+		entry: setHotModule(config.entry),
 		output: {
 			filename: '[name].js',
 			path: config.staticPath,
 			publicPath: config.publicPath
 		},
-		devtool: 'cheap-module-eval-source-map'
-	});
+		devtool: 'cheap-module-eval-source-map',
+		plugins: [
+			new webpack.HotModuleReplacementPlugin()
+		]
+	};
+	const merge = require('webpack-merge');
+	const mergeConfig = merge(baseConfig, devConfig);
 
-	return config;
+	return mergeConfig;
 };
 
 const setHotModule = (entry) => {

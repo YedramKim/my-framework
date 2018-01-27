@@ -55,11 +55,11 @@ module.exports = (() => ({
 		new UglifyJs({
 			sourceMap: true,
 			test: /\.(js)$/,
-			compress: {
-				warnings: false
-			},
 			uglifyOptions: {
-				ecma: 8
+				ecma: 8,
+				compress: {
+					warnings: false
+				}
 			}
 		})
 	]

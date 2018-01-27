@@ -7,6 +7,5 @@ route.method = 'get';
 route.url = '/app';
 
 route.route = (req, res) => {
-	console.log('hahaha?');
 	res.sendFile(appRoot);
 };
