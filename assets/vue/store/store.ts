@@ -7,7 +7,7 @@ export default new Store({
 		count: 0
 	},
 	mutations: {
-		increment (state, ...payloads) {
+		increment (state, ...payloads: any[]) {
 			console.log(payloads);
 			state.count++;
 		}
