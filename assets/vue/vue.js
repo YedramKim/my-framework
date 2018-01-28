@@ -1,8 +1,9 @@
 import Vue from 'vue';
-import store from './store';
-import router from './router';
-import App from './components/App';
+import store from './store/store';
+import router from './router/router';
+import App from './components/common/App';
 
+Vue.config.devtools = process.env.NODE_ENV !== 'production';
 new Vue({
 	el: '#app',
 	router,

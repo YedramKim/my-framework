@@ -10,7 +10,7 @@ module.exports = (() => {
 			entry: {
 				main: path.join(__dirname, '..', 'assets', 'index.js')
 			},
-			publicPath: '/static',
+			publicPath: '/static/',
 			staticPath: staticPath,
 			layoutPath: path.join(__dirname, '..', 'assets', 'layout', 'app.html')
 		}

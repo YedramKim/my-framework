@@ -6,7 +6,7 @@ const extract = new ExtractTextPlugin({
 module.exports = {
 	stack(lang, isVue, options = {}) {
 		const isProduction = process.env.NODE_ENV === 'production';
-		options = Object.assign({
+		options = Object.assign(options, {
 			sourceMap: isProduction
 		});
 
