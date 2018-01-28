@@ -2,9 +2,19 @@ const webpack = require('webpack');
 const UglifyJs = require('uglifyjs-webpack-plugin');
 const createStyleLoader = require('../utils/create-style-loader');
 const isProduction = process.env.NODE_ENV === 'production';
-let rules = [];
 
-rules = [
+let tsLoaderConfig = {
+	loader: 'ts-loader',
+	options: {
+		configFile: 'tsconfig.webpack.json',
+		appendTsSuffixTo: [/\.vue$/]
+	}
+	// loader: 'awesome-typescript-loader',
+	// options: {
+	// 	configFileName: 'tsconfig.webpack.json'
+	// }
+};
+let rules = [
 	{
 		test: /\.vue$/,
 		loader: 'vue-loader',
@@ -15,7 +25,8 @@ rules = [
 			extractCSS: isProduction,
 			loaders: {
 				css: createStyleLoader.stack('css', true),
-				less: createStyleLoader.stack('less', true)
+				less: createStyleLoader.stack('less', true),
+				ts: tsLoaderConfig
 			},
 			transformToRequire: {
 				img: 'src',
@@ -30,6 +41,11 @@ rules = [
 		options: {
 			name: '[name].[ext]'
 		}
+	},
+	{
+		test: /\.(ts)$/,
+		exclude: /node_modules/,
+		...tsLoaderConfig
 	},
 	{
 		test: /\.(js)$/,

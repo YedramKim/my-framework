@@ -8,9 +8,9 @@ module.exports = (() => {
 		},
 		webpack: {
 			entry: {
-				main: path.join(__dirname, '..', 'assets', 'index.js')
+				main: path.join(__dirname, '..', 'assets', 'index.ts')
 			},
-			publicPath: '/static/',
+			publicPath: '/static',
 			staticPath: staticPath,
 			layoutPath: path.join(__dirname, '..', 'assets', 'layout', 'app.html')
 		}
