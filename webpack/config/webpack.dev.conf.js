@@ -9,7 +9,7 @@ module.exports = config => {
 			path: config.staticPath,
 			publicPath: config.publicPath
 		},
-		devtool: 'inline-source-map',
+		devtool: 'cheap-module-eval-source-map',
 		plugins: [
 			new webpack.HotModuleReplacementPlugin()
 		]
