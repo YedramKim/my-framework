@@ -7,11 +7,15 @@
  "license": "MIT",
  "scripts": {
   "dev": "cross-env NODE_ENV=development node index.js",
-  "production": "cross-env NODE_ENV=production node index.js"
+  "production": "cross-env NODE_ENV=production node index.js",
+  "test": "cross-env NODE_ENV=test jest",
+  "test-snapshot-update": "cross-env NODE_ENV=test jest --updateSnapshot"
  },
  "devDependencies": {
+  "@types/jest": "^22.1.1",
   "awesome-typescript-loader": "^3.4.1",
   "babel-core": "^6.26.0",
+  "babel-jest": "^22.1.0",
   "babel-loader": "^7.1.2",
   "babel-plugin-transform-class-properties": "^6.24.1",
   "babel-plugin-transform-decorators": "^6.24.1",
@@ -27,11 +31,13 @@
   "file-loader": "^1.1.5",
   "jest": "^22.1.4",
   "less-loader": "^4.0.5",
+  "ts-jest": "^22.0.3",
   "ts-loader": "^3.1.1",
   "typescript": "^2.6.1",
   "uglifyjs-webpack-plugin": "^1.1.6",
   "url-loader": "^0.6.2",
   "vue-class-component": "^6.1.0",
+  "vue-jest": "^2.0.0",
   "vue-loader": "^13.3.0",
   "vue-template-compiler": "^2.5.2",
   "vue-test-utils": "^1.0.0-beta.11",
@@ -60,5 +66,21 @@
   "vue-router": "^3.0.1",
   "vuex": "^3.0.1",
   "vuex-router-sync": "^5.0.0"
+ },
+ "jest": {
+  "moduleFileExtensions": [
+	 "js",
+	 "jsx",
+	 "ts",
+	 "tsx",
+   "json",
+   "vue"
+  ],
+  "transform": {
+	 ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+	 "^.+\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+   "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+  },
+  "mapCoverage": true
  }
 }
