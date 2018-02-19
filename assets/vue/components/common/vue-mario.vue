@@ -12,8 +12,6 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-
 	export default {
 		name: 'vue-mario',
 		props: {

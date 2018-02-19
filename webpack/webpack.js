@@ -15,9 +15,9 @@ class Bundler {
 		switch (type) {
 			case 'development':
 			case 'test':
-				return require('./config/webpack.dev.conf')(this.config);
+				return this._getDevelopmentConfigure();
 			case 'production':
-				return require('./config/webpack.prod.conf')(this.config);
+			return this._getProductionConfigure();
 			default:
 				return new Error(`올바른 타입이 아닙니다 (${type})`);
 		} 
@@ -46,6 +46,18 @@ class Bundler {
 			module: {
 				rules: [
 					{
+						test: /\.(vue|js)$/,
+						enforce: 'pre',
+						exclude: /node_modules/,
+						loader: 'eslint-loader',
+						options: {
+							"plugins": [
+								"html",
+								"vue"
+							]
+						}
+					},
+					{
 						test: /\.vue$/,
 						loader: 'vue-loader',
 						exclude: /node_modules/,
@@ -62,7 +74,8 @@ class Bundler {
 								img: 'src',
 								image: 'xlink:href',
 								video: 'src'
-							}
+							},
+							postcss: [require('postcss-cssnext')()]
 						}
 					},
 					{

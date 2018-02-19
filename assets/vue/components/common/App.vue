@@ -18,8 +18,7 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import { mapState, Store } from 'vuex';
+	import { mapState } from 'vuex';
 	import VueMario from './vue-mario.vue';
 
 	export default {
