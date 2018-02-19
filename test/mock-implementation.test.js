@@ -2,7 +2,7 @@ jest.mock('./module');
 const mod = require('./module');
 
 test('mockImplementation 테스트', function() {
-	mod.mockImplementation(_ => 100);
+	mod.mockImplementation(_ => 100); // eslint-disable-line
 	expect(mod()).toBe(100);
 });
 

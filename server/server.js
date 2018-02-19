@@ -1,12 +1,11 @@
 const path = require('path');
 const express = require('express');
-const lodash = require('lodash');
 const fs = require('fs-extra');
-const middlewares = require('./middlewares');
+const middlewares = require('./middlewares'); // eslint-disable-line
 
 module.exports = class Server {
 	constructor (config) {
-		const app = this.app = express();
+		this.app = express();
 		this.config = config;
 	}
 
@@ -17,11 +16,11 @@ module.exports = class Server {
 	async start() {
 		await this._setMiddlewares();
 		await this._setRoutes();
-		this.app.use((req, res, next) => {
+		this.app.use((req, res) => {
 			res.send('404....');
 		});
 		return new Promise((res) => {
-			this.app.listen(this.config.port, _ => res(this));
+			this.app.listen(this.config.port, () => res(this));
 		});
 	}
 

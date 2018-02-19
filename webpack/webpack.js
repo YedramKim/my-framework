@@ -49,13 +49,7 @@ class Bundler {
 						test: /\.(vue|js)$/,
 						enforce: 'pre',
 						exclude: /node_modules/,
-						loader: 'eslint-loader',
-						options: {
-							"plugins": [
-								"html",
-								"vue"
-							]
-						}
+						loader: 'eslint-loader'
 					},
 					{
 						test: /\.vue$/,
@@ -160,7 +154,7 @@ class Bundler {
 		return merge(baseConfig, {
 			plugins: [
 				new htmlPlugin({
-					template: config.layoutPath,
+					template: this.config.layoutPath,
 					filename: 'index.html',
 					minify: {
 						minifyCSS: true,
@@ -224,9 +218,9 @@ class Bundler {
 					res();
 					console.log('webpack compile complete');
 				}
-			})
+			});
 		});
 	}
-};
+}
 
 module.exports = Bundler;
