@@ -35,5 +35,6 @@ const routes = [
 
 export default new VueRouter({
 	routes,
+	base: '/app',
 	mode: 'history'
 });

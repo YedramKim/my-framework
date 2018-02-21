@@ -4,7 +4,6 @@ const staticPath = path.resolve(__dirname, '..', 'static');
 module.exports = (() => {
 	return {
 		server: {
-			port: 80
 		},
 		webpack: {
 			entry: {

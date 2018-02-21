@@ -1,3 +1,4 @@
+const http = require('http');
 const path = require('path');
 const express = require('express');
 const fs = require('fs-extra');
@@ -19,22 +20,18 @@ module.exports = class Server {
 		this.app.use((req, res) => {
 			res.send('404....');
 		});
-		return new Promise((res) => {
-			this.app.listen(this.config.port, () => res(this));
+
+		const httpServer = new Promise(res => {
+			const server = http.createServer(this.app);
+			server.listen(80, res);
 		});
+		await Promise.all([httpServer]);
+
+		return this;
 	}
 
 	async _setMiddlewares () {
-		const middlewares = require('./middlewares');
-		const configs = this.config.middlewares;
-		const middlewarePromises = [];
-
-		for (let config in configs) {
-			let middleware = middlewares[config](this.app, configs[config]);
-			middlewarePromises.push(middleware);
-		}
-
-		return await Promise.all(middlewarePromises);
+		
 	}
 
 	async _setRoutes () {
