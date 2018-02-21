@@ -31,10 +31,6 @@ class Bundler {
 				configFile: 'tsconfig.webpack.json',
 				appendTsSuffixTo: [/\.vue$/]
 			}
-			// loader: 'awesome-typescript-loader',
-			// options: {
-			// 	configFileName: 'tsconfig.webpack.json'
-			// }
 		};
 		return {
 			entry: this.config.entry,
@@ -49,7 +45,10 @@ class Bundler {
 						test: /\.(vue|js)$/,
 						enforce: 'pre',
 						exclude: /node_modules/,
-						loader: 'eslint-loader'
+						loader: 'eslint-loader',
+						options: {
+							configFile: path.join(__dirname, '.eslintrc.js')
+						}
 					},
 					{
 						test: /\.vue$/,
@@ -95,16 +94,6 @@ class Bundler {
 				new webpack.DefinePlugin({
 					'process.env': {
 						NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-					}
-				}),
-				new UglifyJs({
-					sourceMap: true,
-					test: /\.(js)$/,
-					uglifyOptions: {
-						ecma: 8,
-						compress: {
-							warnings: false
-						}
 					}
 				})
 			],
@@ -159,6 +148,16 @@ class Bundler {
 					minify: {
 						minifyCSS: true,
 						minifyJS: true
+					}
+				}),
+				new UglifyJs({
+					sourceMap: true,
+					test: /\.(js)$/,
+					uglifyOptions: {
+						ecma: 8,
+						compress: {
+							warnings: false
+						}
 					}
 				}),
 				createStyleLoader.extract

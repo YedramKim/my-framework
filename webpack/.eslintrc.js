@@ -1,5 +1,6 @@
 module.exports = {
 	"parserOptions": {
+		"parser": "babel-eslint",
 		"ecmaVersion": 9,
 		"sourceType": "module",
 		"ecmaFeatures": {
@@ -42,6 +43,7 @@ module.exports = {
 		]
 	},
 	"plugins": [
+		"html"
 	],
 	"globals": {
 		"process": true,
@@ -53,5 +55,7 @@ module.exports = {
 		"es6": true,
 		"jest": true
 	},
-	"extends": "eslint:recommended"
+	"extends": [
+		"eslint:recommended"
+	]
 };

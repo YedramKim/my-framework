@@ -16,8 +16,8 @@
 		}
 	})
 	export default class TsComponent extends Vue {
-		count: number;
-		prop1: string = 'abc'
+		count!: number;
+		prop1: string = 'abc';
 		onClick ():void {
 			console.log(this.prop1);
 		}
