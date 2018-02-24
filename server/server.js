@@ -88,7 +88,7 @@ module.exports = class Server {
 			}
 		});
 
-		this.app.use((error, req, res, next) => {
+		this.app.use((error, req, res) => {
 			console.log(error);
 			res.send(error);
 		});
