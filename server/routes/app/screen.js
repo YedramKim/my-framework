@@ -6,6 +6,9 @@ route.method = 'get';
 
 route.url = /app/;
 
-route.route = (req, res) => {
+route.route = (req, res, next) => {
 	res.sendFile(appRoot);
+	next();
 };
+
+module.exports = route;
