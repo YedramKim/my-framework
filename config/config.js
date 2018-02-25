@@ -23,9 +23,9 @@ module.exports = (() => {
 								saveUninitialized: true
 							},
 							redisOptions: {
-								host: '127.0.0.1',
-								port: 6379,
-								db: 7,
+								host: 'redis-13675.c17.us-east-1-4.ec2.cloud.redislabs.com',
+								port: 13675,
+								// db: 7,
 								logError: true
 							}
 						}
