@@ -9,8 +9,25 @@ module.exports = (() => {
 					{
 						name: 'session',
 						options: {
-							mode: 'cookie',
-							sessionOptions: {}
+							mode: 'redis',
+							sessionOptions: {
+								secret: 'yedarmkim',
+								cookie: {
+									secure: false,
+									httpOnly: false,
+									maxAge: 60 * 60 * 1000,
+									domain: false
+								},
+								resave: true,
+								rolling: true,
+								saveUninitialized: true
+							},
+							redisOptions: {
+								host: '127.0.0.1',
+								port: 6379,
+								db: 7,
+								logError: true
+							}
 						}
 					}
 				]
@@ -26,5 +43,9 @@ module.exports = (() => {
 		}
 	};
 
-	return process.env.NODE_ENV !== 'production' ? baseConfig : {...baseConfig};
+	if (process.env.NODE_ENV !== 'production') {
+		return baseConfig;
+	} else {
+		return {...baseConfig};
+	};
 });

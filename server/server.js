@@ -10,6 +10,7 @@ module.exports = class Server {
 			middlewares: {},
 			...config
 		};
+		this._setPreMiddlewares();
 	}
 
 	setStatic(url, staticPath) {
@@ -17,7 +18,6 @@ module.exports = class Server {
 	}
 
 	async start() {
-		this._setPreMiddlewares();
 		await this._setRoutes();
 		this._setPostMiddlewares();
 		this._setExecption();
@@ -75,7 +75,7 @@ module.exports = class Server {
 
 	_getMiddleware (middlewareData) {
 		if (typeof middlewareData === 'object') {
-			return require(`./middlewares/${middlewareData.name}`)(middlewareData.option);
+			return require(`./middlewares/${middlewareData.name}`)(middlewareData.options);
 		} else {
 			return require(`./middlewares/${middlewareData}`);
 		}
