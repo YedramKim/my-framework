@@ -7,7 +7,7 @@ const Webpack = require('./webpack/webpack');
 
 (async () => {
 	try {
-		const config = require('./config/config');
+		const config = require('./config/config')();
 		const server = new Server(config.server);
 		await webpackCompile(server, config.webpack);
 	
