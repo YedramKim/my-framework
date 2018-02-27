@@ -13,8 +13,8 @@ module.exports = class Server {
 		this._setPreMiddlewares();
 	}
 
-	setStatic(url, staticPath) {
-		this.app.use(url, express.static(staticPath));
+	setStatic(url, staticRoot) {
+		this.app.use(url, express.static(staticRoot));
 	}
 
 	async start() {

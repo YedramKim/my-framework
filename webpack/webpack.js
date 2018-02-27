@@ -36,7 +36,7 @@ class Bundler {
 			entry: this.config.entry,
 			output: {
 				filename: '[name].js',
-				path: this.config.staticPath,
+				path: this.config.staticRoot,
 				publicPath: this.config.publicPath
 			},
 			module: {
@@ -186,7 +186,7 @@ class Bundler {
 	}
 
 	async _buildHTML () {
-		const { layoutPath, publicPath, staticPath, entry } = this.config;
+		const { layoutPath, publicPath, staticRoot, entry } = this.config;
 		console.log(layoutPath);
 		const layout = await fse.readFile(layoutPath);
 		const $ = cheerio.load(layout);
@@ -195,8 +195,8 @@ class Bundler {
 			body.append(`<script src="${publicPath}/${js}.js"></script>`);
 		}
 
-		await fse.ensureDir(staticPath);
-		await fse.writeFile(path.join(staticPath, 'index.html'), $.html());
+		await fse.ensureDir(staticRoot);
+		await fse.writeFile(path.join(staticRoot, 'index.html'), $.html());
 	}
 
 	async build() {
@@ -219,6 +219,21 @@ class Bundler {
 				}
 			});
 		});
+	}
+
+	async webpackCompile (server) {
+		switch (process.env.NODE_ENV) {
+			case 'production':
+				await this.build();
+				server.setStatic(this.config.publicPath, this.config.staticRoot);
+				break;
+			case 'test':
+				break;
+			case 'development':
+			default:
+				await this.applyServer(server.app);
+				break;
+		}
 	}
 }
 
