@@ -41,7 +41,12 @@ module.exports = (() => {
 			staticRoot,
 			layoutPath: path.join(__dirname, '..', 'assets', 'layout', 'app.html')
 		},
-		database: {}
+		database: {
+			host: 'localhost',
+			database: 'test1',
+			user: 'root',
+			password: 1234
+		}
 	};
 
 	if (process.env.NODE_ENV !== 'production') {
