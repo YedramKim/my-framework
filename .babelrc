@@ -3,9 +3,9 @@
     ["env", { "modules": false }]
   ],
 	"plugins": [
-		"transform-decorators-legacy",
-		"transform-class-properties",
-		"transform-object-rest-spread"
+		"@babel/plugin-proposal-decorators",
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread"
 	],
   "env": {
     "test": {
