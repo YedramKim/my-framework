@@ -6,30 +6,62 @@ class Database {
 		const Sequelize = require('sequelize');
 		const {
 			database,
-			user,
+			username,
 			password,
 			host
 		} = this.config = config;
-		this.sequelize = new Sequelize(database, user, password, {
-			host,
+		this.sequelize = new Sequelize(database, username, password, {
+			host: 'localhost',
+			port: 3306,
 			dialect: 'mysql',
-			port: 3306
+			define: {
+				charset: 'utf8',
+				timestamps: true
+			}
 		});
 	}
 
 	async sync () {
-		this.schemas = await this._getSchemas();
+		await this.sequelize.authenticate();
+		await this._getSchemas();
 		await this._migrations();
+		this._createModels();
+		await this.sequelize.sync();
 	}
 
 	async _getSchemas () {
 		const regExp = /\.js$/;
-		return (await fse.readdir(path.join(__dirname, 'schemas'))).filter(schema => regExp.test(schema));
+		const schemaRoots = path.join(__dirname, 'schemas');
+		this.schemas = (await fse.readdir(schemaRoots)).filter(schema => regExp.test(schema)).map(schema => require(path.join(schemaRoots, schema)));
 	}
 
 	async _migrations () {
 		const version = require('../package.json').version;
 		console.log(version);
+	}
+
+	_createModels () {
+		// model define
+		this.schemas.forEach(({name, model, options = {}}) => {
+			name = name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();
+			this.sequelize.define(name, model, {
+				paranoid: true,
+				...options
+			});
+		});
+		this.models = this.sequelize.models;
+
+		// set association
+		this.schemas.filter((schema) => schema.associations).forEach(({name, associations}) => {
+			const model = this.models[name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()];
+			associations.forEach(({target, relation, ...options}) => {
+				const targetModel = this.models[target.charAt(0).toUpperCase() + target.substr(1).toLowerCase()];
+				model[relation](targetModel, {
+					constraints: false,
+					...options
+				});
+			});
+		});
 	}
 }
 

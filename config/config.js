@@ -44,8 +44,8 @@ module.exports = (() => {
 		database: {
 			host: 'localhost',
 			database: 'test1',
-			user: 'root',
-			password: 1234
+			username: 'root',
+			password: '1234'
 		}
 	};
 

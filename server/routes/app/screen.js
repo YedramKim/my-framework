@@ -9,5 +9,3 @@ route.route = (req, res, next) => {
 	res.sendFile(path.join(__dirname, '..', '..', '..', 'static', 'index.html'));
 	next();
 };
-
-module.exports = route;

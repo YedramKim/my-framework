@@ -17,6 +17,18 @@ module.exports = class Server {
 		this.app.use(url, express.static(staticRoot));
 	}
 
+	useMiddleware(...middlewares) {
+		this.app.use(...middlewares);
+	}
+
+	setDataToServer(name, data) {
+		this.app.set(name, data);
+	}
+
+	getDataFromServer(name) {
+		this.app.get(name);
+	}
+
 	async start() {
 		await this._setRoutes();
 		this._setPostMiddlewares();

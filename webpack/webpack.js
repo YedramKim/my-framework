@@ -165,11 +165,11 @@ class Bundler {
 		});
 	}
 
-	async applyServer(app) {
+	async applyServer(server) {
 		const webpackConfig = this._getconfigure('development');
 		const compile = webpack(webpackConfig);
 
-		app.use(require('webpack-dev-middleware')(compile, {
+		server.useMiddleware(require('webpack-dev-middleware')(compile, {
 			noInfo: true,
 			publicPath: this.config.publicPath,
 			stats: {
@@ -177,7 +177,7 @@ class Bundler {
 			}
 		}));
 
-		app.use(require('webpack-hot-middleware')(compile, {
+		server.useMiddleware(require('webpack-hot-middleware')(compile, {
 			heartbeat: 500,
 			log: console.log
 		}));
@@ -231,7 +231,7 @@ class Bundler {
 				break;
 			case 'development':
 			default:
-				await this.applyServer(server.app);
+				await this.applyServer(server);
 				break;
 		}
 	}
