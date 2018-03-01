@@ -10,7 +10,7 @@ class Database {
 			password,
 			host
 		} = this.config = config;
-		this.sequelize = new Sequelize(database, username, password, {
+		this.sequelize = new Sequelize(database, user, password, {
 			host,
 			dialect: 'mysql',
 			port: 3306
@@ -18,18 +18,19 @@ class Database {
 	}
 
 	async sync () {
-		this.models = await this._getModels();
+		this.schemas = await this._getSchemas();
 		await this._migrations();
 	}
 
-	async _getModels () {
+	async _getSchemas () {
 		const regExp = /\.js$/;
-		this.models =  (await fse.readdir(path.join(__dirname, 'models'))).filter(model => regExp.test(models));
+		return (await fse.readdir(path.join(__dirname, 'schemas'))).filter(schema => regExp.test(schema));
 	}
 
 	async _migrations () {
 		const version = require('../package.json').version;
+		console.log(version);
 	}
-};
+}
 
 module.exports = Database;
