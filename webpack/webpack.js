@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const UglifyJs = require('uglifyjs-webpack-plugin');
 const cheerio = require('cheerio');
 const createStyleLoader = require('./utils/create-style-loader');
 const fse = require('fs-extra');
@@ -17,7 +16,7 @@ class Bundler {
 			case 'test':
 				return this._getDevelopmentConfigure();
 			case 'production':
-			return this._getProductionConfigure();
+				return this._getProductionConfigure();
 			default:
 				return new Error(`올바른 타입이 아닙니다 (${type})`);
 		} 
@@ -108,10 +107,15 @@ class Bundler {
 
 	_getDevelopmentConfigure () {
 		const baseConfig = this._getBaseConfigure();
+		const Jarvis = require("webpack-jarvis");
+
 		const devConfig = merge(baseConfig, {
 			devtool: 'cheap-module-eval-source-map',
 			plugins: [
-				new webpack.HotModuleReplacementPlugin()
+				new webpack.HotModuleReplacementPlugin(),
+				new Jarvis({
+					port: 1337
+				})
 			]
 		});
 		devConfig.entry = this._setHotModule(devConfig.entry);
@@ -139,6 +143,7 @@ class Bundler {
 	_getProductionConfigure () {
 		const baseConfig = this._getBaseConfigure();
 		const htmlPlugin = require('html-webpack-plugin');
+		const UglifyJs = require('uglifyjs-webpack-plugin');
 
 		return merge(baseConfig, {
 			plugins: [
