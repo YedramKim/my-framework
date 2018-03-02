@@ -55,7 +55,6 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
-    "compare-versions": "^3.1.0",
     "connect-redis": "^3.3.3",
     "cross-env": "^5.1.0",
     "express": "^4.16.2",

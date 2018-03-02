@@ -11,7 +11,7 @@ class Database {
 			host
 		} = this.config = config;
 		this.sequelize = new Sequelize(database, username, password, {
-			host: 'localhost',
+			host,
 			port: 3306,
 			dialect: 'mysql',
 			define: {
@@ -36,8 +36,38 @@ class Database {
 	}
 
 	async _migrations () {
-		const version = require('../package.json').version;
-		console.log(version);
+		const Umzug = require('umzug');
+		const sequelize = this.sequelize;
+		const Sequelize = require('sequelize');
+
+		const sequelizeMeta = sequelize.define('sequelizeMeta', {
+			name: {
+				type: Sequelize.STRING
+			}
+		});
+		await sequelizeMeta.sync();
+
+		const umzug = new Umzug({
+			storage: 'sequelize',
+			storageOptions: {
+				sequelize: sequelize,
+				model: sequelizeMeta,
+				modelName: 'sequelizeMeta',
+				tableName: 'SequelizeMeta',
+				columnName: 'name'
+			},
+			migrations: {
+				params: [
+					sequelize.getQueryInterface(),
+					sequelize,
+					Sequelize
+				],
+				path: path.join(__dirname, 'migrations'),
+				pattern: /^db-\d+\.js$/
+			}
+		});
+
+		await umzug.up();
 	}
 
 	_createModels () {

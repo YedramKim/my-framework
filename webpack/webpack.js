@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const cheerio = require('cheerio');
 const createStyleLoader = require('./utils/create-style-loader');
-const fse = require('fs-extra');
 
 class Bundler {
 	constructor (config) {
@@ -99,7 +97,8 @@ class Bundler {
 			resolve: {
 				extensions: ['.js', '.ts', '.vue', '.json'],
 				alias: {
-					'vue$': 'vue/dist/vue.esm.js'
+					'vue$': 'vue/dist/vue.esm.js',
+					'@': path.resolve(__dirname, '..', 'assets')
 				}
 			}
 		};
@@ -107,7 +106,7 @@ class Bundler {
 
 	_getDevelopmentConfigure () {
 		const baseConfig = this._getBaseConfigure();
-		const Jarvis = require("webpack-jarvis");
+		const Jarvis = require('webpack-jarvis');
 
 		const devConfig = merge(baseConfig, {
 			devtool: 'cheap-module-eval-source-map',
@@ -191,8 +190,10 @@ class Bundler {
 	}
 
 	async _buildHTML () {
+		const fse = require('fs-extra');
+		const cheerio = require('cheerio');
+
 		const { layoutPath, publicPath, staticRoot, entry } = this.config;
-		console.log(layoutPath);
 		const layout = await fse.readFile(layoutPath);
 		const $ = cheerio.load(layout);
 		const body = $('body');
