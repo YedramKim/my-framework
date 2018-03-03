@@ -31,7 +31,7 @@ class Database {
 
 	async _getSchemas () {
 		const regExp = /\.js$/;
-		const schemaRoots = path.join(__dirname, 'schemas');
+		const schemaRoots = path.join(__dirname, 'schemas', process.env.PRODUCT);
 		this.schemas = (await fse.readdir(schemaRoots)).filter(schema => regExp.test(schema)).map(schema => require(path.join(schemaRoots, schema)));
 	}
 
@@ -62,7 +62,7 @@ class Database {
 					sequelize,
 					Sequelize
 				],
-				path: path.join(__dirname, 'migrations'),
+				path: path.join(__dirname, 'migrations', process.env.PRODUCT),
 				pattern: /^db-\d+\.js$/
 			}
 		});
