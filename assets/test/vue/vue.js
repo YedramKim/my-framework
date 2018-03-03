@@ -12,9 +12,27 @@ import 'vuetify/dist/vuetify.min.css';
 // 기본 설정
 import '@/style/main.css';
 
+import styled from 'vue-styled-components';
+const h1 = styled('h1', {
+	color: String
+})`
+	color: ${props => props.color};
+`;
+
 new Vue({
 	el: '#app',
 	router,
 	store,
-	render: (h) => h('div', null, 'a')
+	render: (h) => h('div', null, [
+		h(h1, {
+			props: {
+				color: 'gold'
+			}
+		}, 'gold'),
+		h(h1, {
+			props: {
+				color: 'red'
+			}
+		}, 'red')
+	])
 });
