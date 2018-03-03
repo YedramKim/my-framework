@@ -23,16 +23,11 @@ new Vue({
 	el: '#app',
 	router,
 	store,
-	render: (h) => h('div', null, [
-		h(h1, {
-			props: {
-				color: 'gold'
-			}
-		}, 'gold'),
-		h(h1, {
-			props: {
-				color: 'red'
-			}
-		}, 'red')
-	])
+	components: {
+		h1c: h1
+	},
+	render: (h) => h ? (<div>
+		<h1c color="gold">h1 gold</h1c>
+		<h1c color="red">h1 red</h1c>
+	</div>) : ''
 });
