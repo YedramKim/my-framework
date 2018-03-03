@@ -77,7 +77,7 @@
     "serve-static": "^1.13.1",
     "sweetalert2": "^7.13.1",
     "umzug": "^2.1.0",
-    "vue": "^2.5.2",
+    "vue": "^2.5.13",
     "vue-router": "^3.0.1",
     "vue-styled-components": "^1.2.1",
     "vuetify": "^1.0.3",
