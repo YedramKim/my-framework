@@ -7,6 +7,6 @@
 		"experimentalDecorators": true
 	},
 	"files": [
-		"assets/index.ts"
+		"assets/dummy.ts"
 	]
 }

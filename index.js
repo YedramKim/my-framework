@@ -12,7 +12,7 @@ if (!process.env.PRODUCT) {
 		const Webpack = require('./webpack/webpack');
 		const Database = require('./database/database');
 
-		const config = require('./config/config')();
+		const config = require(`./config/${process.env.PRODUCT}/config`)();
 		const server = new Server(config.server);
 
 		const database = new Database(config.database);
