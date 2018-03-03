@@ -85,6 +85,10 @@ class Bundler {
 						test: /\.(js)$/,
 						loader: 'babel-loader',
 						exclude: /node_modules/
+					},
+					{
+						test: /\.css$/,
+						use: createStyleLoader.stack('css', false)
 					}
 				]
 			},

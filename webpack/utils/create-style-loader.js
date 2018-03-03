@@ -19,7 +19,7 @@ module.exports = {
 			}
 		};
 		const loaders = [cssLoader];
-		if (lang) {
+		if (lang && lang !== 'css') {
 			loaders.push({
 				loader: `${lang}-loader`,
 				options
