@@ -6,10 +6,10 @@
   "author": "YedarmKim <oncoder@naver.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node index.js",
-    "production": "cross-env NODE_ENV=production node index.js",
-    "test": "cross-env NODE_ENV=test jest",
-    "test-snapshot-update": "cross-env NODE_ENV=test jest --updateSnapshot",
+    "dev": "cross-env NODE_ENV=development cross-env PRODUCT=test node index.js",
+    "production": "cross-env NODE_ENV=production cross-env PRODUCT=test node index.js",
+    "test": "cross-env NODE_ENV=test cross-env PRODUCT=test jest",
+    "test-snapshot-update": "cross-env NODE_ENV=test cross-env PRODUCT=test jest --updateSnapshot",
     "eslint": "eslint \"**/*.js\""
   },
   "devDependencies": {

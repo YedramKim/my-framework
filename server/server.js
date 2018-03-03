@@ -49,12 +49,9 @@ module.exports = class Server {
 	}
 
 	async _setRoutes () {
-		const routesPath = path.join(__dirname, 'routes');
+		const routesPath = path.join(__dirname, 'routes', process.env.PRODUCT);
 		const routeFolders = await fs.readdir(routesPath);
-		const disable404Handler = (req, res, next) => {
-			req.not404 = true;
-			next();
-		};
+		const dontGo404Exeption = () => {};
 		const extReg = /\.js$/;
 
 		await Promise.all(routeFolders.map(async routeFolder => {
@@ -71,11 +68,11 @@ module.exports = class Server {
 					pre,
 					post,
 					route
-				} = require(`./routes/${routeFolder}/${routeFile}`);
+				} = require(`./routes/${process.env.PRODUCT}/${routeFolder}/${routeFile}`);
 				const preMiddlewares = (pre || []).map(middlewareData => this._getMiddleware(middlewareData));
 				const postMiddlewares = (post || []).map(middlewareData => this._getMiddleware(middlewareData));
 
-				this.app[method](url, ...[...preMiddlewares, route, ...postMiddlewares, disable404Handler]);
+				this.app[method](url, ...[...preMiddlewares, route, ...postMiddlewares, dontGo404Exeption]);
 			});
 		}));
 	}
@@ -95,9 +92,7 @@ module.exports = class Server {
 
 	_setExecption () {
 		this.app.use((req, res) => {
-			if (!req.not404) {
-				res.send('404....');
-			}
+			res.send('404....');
 		});
 
 		this.app.use((error, req, res) => {

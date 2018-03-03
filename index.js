@@ -2,6 +2,10 @@ if (!process.env.NODE_ENV) {
 	process.env.NODE_ENV = 'development';
 }
 
+if (!process.env.PRODUCT) {
+	process.env.PRODUCT = 'test';
+}
+
 (async () => {
 	try {
 		const Server = require('./server/server');
