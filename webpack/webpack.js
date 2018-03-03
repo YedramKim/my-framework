@@ -72,7 +72,8 @@ class Bundler {
 						test: /\.(png|jpg|gif|svg|otf|ttf)$/,
 						loader: 'file-loader',
 						options: {
-							name: '[name].[ext]'
+							name: '[name].[ext]',
+							publicPath: !isProduction ? this.config.publicPath : this.config.publicPath + '/'
 						}
 					},
 					{
