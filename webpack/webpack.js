@@ -146,19 +146,27 @@ class Bundler {
 
 	_getProductionConfigure () {
 		const baseConfig = this._getBaseConfigure();
-		const htmlPlugin = require('html-webpack-plugin');
+		const HtmlPlugin = require('html-webpack-plugin');
 		const UglifyJs = require('uglifyjs-webpack-plugin');
+		const layouts = (() => {
+			const layouts = [];
+			for (let layout in this.config.layouts) {
+				layouts.push(new HtmlPlugin({
+					template: this.config.layouts[layout],
+					filename: `${layout}.html`,
+					minify: {
+						minifyCSS: true,
+						minifyJS: true,
+						collapseWhitespace: true
+					}
+				}));
+			}
+			return layouts;
+		})();
 
 		return merge(baseConfig, {
 			plugins: [
-				new htmlPlugin({
-					template: this.config.layoutPath,
-					filename: 'index.html',
-					minify: {
-						minifyCSS: true,
-						minifyJS: true
-					}
-				}),
+				...layouts,
 				new UglifyJs({
 					sourceMap: true,
 					test: /\.(js)$/,
@@ -198,16 +206,18 @@ class Bundler {
 		const fse = require('fs-extra');
 		const cheerio = require('cheerio');
 
-		const { layoutPath, publicPath, staticRoot, entry } = this.config;
-		const layout = await fse.readFile(layoutPath);
-		const $ = cheerio.load(layout);
-		const body = $('body');
-		for (let js in entry) {
-			body.append(`<script src="${publicPath}/${js}.js"></script>`);
+		const { layouts, publicPath, staticRoot, entry } = this.config;
+		for (let layout in layouts) {
+			const layoutFile = await fse.readFile(layouts[layout]);
+			const $ = cheerio.load(layoutFile);
+			const body = $('body');
+			for (let js in entry) {
+				body.append(`<script src="${publicPath}/${js}.js"></script>`);
+			}
+	
+			await fse.ensureDir(staticRoot);
+			await fse.writeFile(path.join(staticRoot, `${layout}.html`), $.html());
 		}
-
-		await fse.ensureDir(staticRoot);
-		await fse.writeFile(path.join(staticRoot, 'index.html'), $.html());
 	}
 
 	async build() {

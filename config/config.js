@@ -39,7 +39,10 @@ module.exports = (() => {
 			},
 			publicPath: '/static',
 			staticRoot,
-			layoutPath: path.join(__dirname, '..', 'assets', 'layout', 'app.html')
+			layouts: {
+				main: path.join(__dirname, '..', 'assets', 'layout', 'main.html'),
+				login: path.join(__dirname, '..', 'assets', 'layout', 'login.html')
+			}
 		},
 		database: {
 			host: 'localhost',

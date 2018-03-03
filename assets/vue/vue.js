@@ -9,6 +9,9 @@ import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 import 'vuetify/dist/vuetify.min.css';
 
+// 기본 설정
+import '@/style/main.css';
+
 new Vue({
 	el: '#app',
 	router,
