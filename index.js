@@ -3,7 +3,7 @@ if (!process.env.NODE_ENV) {
 }
 
 if (!process.env.PRODUCT) {
-	process.env.PRODUCT = 'test';
+	process.env.PRODUCT = 'study';
 }
 
 (async () => {
