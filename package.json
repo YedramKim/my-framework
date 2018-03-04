@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development cross-env PRODUCT=study node index.js",
+    "beta": "cross-env NODE_ENV=beta cross-env PRODUCT=study node index.js",
     "production": "cross-env NODE_ENV=production cross-env PRODUCT=study node index.js",
     "test": "cross-env NODE_ENV=test cross-env PRODUCT=study jest",
     "test-snapshot-update": "cross-env NODE_ENV=test cross-env PRODUCT=study jest --updateSnapshot",

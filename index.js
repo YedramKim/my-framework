@@ -6,34 +6,67 @@ if (!process.env.PRODUCT) {
 	process.env.PRODUCT = 'study';
 }
 
-(async () => {
-	try {
-		const Server = require('./server/server');
-		const Database = require('./database/database');
-		const Scheduler = require('./scheduler/scheduler');
-		const Webpack = require('./webpack/webpack');
+const {
+	processFork
+} = require('./utils');
 
-		const config = require(`./config/${process.env.PRODUCT}/config`)();
-		const server = new Server(config.server);
+processFork({
+	forkNum: 1,
+	async createdWorker () {},
+	async master () {
+		try {
+			const config = require(`./config/${process.env.PRODUCT}/config`)();
 
-		const database = new Database(config.database);
-		await database.sync();
-		server.setDataToServer('database', database);
+			const Webpack = require('./webpack/webpack');
+			const Database = require('./database/database');
+			const Scheduler = require('./scheduler/scheduler');
 
-		const bundler = new Webpack(config.webpack);
-		await bundler.webpackCompile(server);
+			if (['production', 'beta'].indexOf(process.env.NODE_ENV) !== -1) {
+				const bundler = new Webpack(config.webpack);
+				await bundler.build();
+			}
 
-		const scheduler = new Scheduler({
-			server,
-			database
-		});
-		await scheduler.onScheduler();
+			const database = new Database(config.database);
+
+			const scheduler = new Scheduler({
+				database
+			});
+			await scheduler.onScheduler();
+
+			return {
+				config
+			};
+		} catch (err) {
+			console.log('master 에러 발생. 아 왜~~~~!');
+			console.log(err);
+			process.exit(1);
+		}
+	},
+	async worker (data) {
+		try {
+			const {
+				config
+			} = data;
 	
-		await server.start();
-		console.log('서버가 실행되었습니다.');
-	} catch (err) {
-		console.log('에러 발생. 아 왜~~~~!');
-		console.log(err);
-		process.exit(1);
+			const Server = require('./server/server');
+			const Database = require('./database/database');
+			const Webpack = require('./webpack/webpack');
+	
+			const server = new Server(config.server);
+	
+			const database = new Database(config.database);
+			await database.sync();
+			server.setDataToServer('database', database);
+	
+			const bundler = new Webpack(config.webpack);
+			await bundler.webpackCompile(server);
+	
+			await server.start();
+			console.log('서버가 실행되었습니다.');
+		} catch (err) {
+			console.log('child 에러 발생. 아 왜~~~~!');
+			console.log(err);
+			process.exit(1);
+		}
 	}
-})();
+});

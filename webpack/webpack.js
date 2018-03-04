@@ -14,6 +14,7 @@ class Bundler {
 			case 'test':
 				return this._getDevelopmentConfigure();
 			case 'production':
+			case 'beta':
 				return this._getProductionConfigure();
 			default:
 				return new Error(`올바른 타입이 아닙니다 (${type})`);
@@ -245,7 +246,7 @@ class Bundler {
 	async webpackCompile (server) {
 		switch (process.env.NODE_ENV) {
 			case 'production':
-				await this.build();
+			case 'beta':
 				server.setStatic(this.config.publicPath, this.config.staticRoot);
 				break;
 			case 'test':
