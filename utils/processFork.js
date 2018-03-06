@@ -1,11 +1,10 @@
 const cluster = require('cluster');
-const os = require('os');
 let workers = [];
 
 module.exports = async forkData => {
 	try {
 		forkData = {
-			forkNum: os.cpus().length,
+			forkNum: require('os').cpus().length,
 			async createdWorker () {},
 			async master () {},
 			async worker () {},
