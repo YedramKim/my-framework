@@ -3,9 +3,7 @@ module.exports = {
 		"ecmaVersion": 9,
 		"sourceType": "module",
 		"ecmaFeatures": {
-			"jsx": true,
-			"experimentalObjectRestSpread": true,
-			"experimentalDecorators": true
+			"experimentalObjectRestSpread": true
 		}
 	},
 	"rules": {
@@ -48,7 +46,6 @@ module.exports = {
 		"console": true
 	},
 	"env": {
-		"browser": true,
 		"node": true,
 		"es6": true,
 		"jest": true

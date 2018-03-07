@@ -49,6 +49,9 @@ module.exports = (() => {
 			database: 'test1',
 			username: 'root',
 			password: '1234'
+		},
+		scheduler: {
+			local: 'Asia/Seoul'
 		}
 	};
 

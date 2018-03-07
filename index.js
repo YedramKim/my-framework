@@ -28,7 +28,7 @@ processFork({
 
 			const database = new Database(config.database);
 
-			const scheduler = new Scheduler({
+			const scheduler = new Scheduler(config.scheduler, {
 				database
 			});
 			await scheduler.onScheduler();
