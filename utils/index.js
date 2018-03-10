@@ -1,3 +1,4 @@
 module.exports = {
-	processFork: require('./processFork')
+	processFork: require('./processFork'),
+	report : require('./report')
 };

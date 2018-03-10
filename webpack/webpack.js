@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const createStyleLoader = require('./utils/create-style-loader');
+const {
+	report
+} = require('../utils');
 
 class Bundler {
 	constructor (config) {
@@ -197,7 +200,7 @@ class Bundler {
 
 		server.useMiddleware(require('webpack-hot-middleware')(compile, {
 			heartbeat: 500,
-			log: console.log
+			log: report
 		}));
 
 		await this._buildHTML();
@@ -227,17 +230,17 @@ class Bundler {
 		return new Promise((res, rej) => {
 			compile.run((err, stats) => {
 				if (err) {
-					console.error('webpack compile error');
+					report.error('webpack compile error');
 					rej(err);
 				} else if (stats.hasErrors()) {
-					console.error('webpack compile error');
+					report.error('webpack compile error');
 					rej(stats.toString({
 						colors: true,
 						reasons: true
 					}));
 				} else {
 					res();
-					console.log('webpack compile complete');
+					report('webpack compile complete');
 				}
 			});
 		});

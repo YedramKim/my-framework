@@ -7,7 +7,8 @@ if (!process.env.PRODUCT) {
 }
 
 const {
-	processFork
+	processFork,
+	report
 } = require('./utils');
 
 processFork({
@@ -38,8 +39,8 @@ processFork({
 				config
 			};
 		} catch (err) {
-			console.log('master 에러 발생. 아 왜~~~~!');
-			console.log(err);
+			report('master 에러 발생. 아 왜~~~~!');
+			report(err);
 			process.exit(1);
 		}
 	},
@@ -63,10 +64,10 @@ processFork({
 			await bundler.webpackCompile(server);
 	
 			await server.start();
-			console.log('서버가 실행되었습니다.');
+			report('서버가 실행되었습니다.');
 		} catch (err) {
-			console.log('child 에러 발생. 아 왜~~~~!');
-			console.log(err);
+			report('child 에러 발생. 아 왜~~~~!');
+			report(err);
 			process.exit(1);
 		}
 	}

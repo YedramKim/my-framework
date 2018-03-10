@@ -2,6 +2,9 @@ const http = require('http');
 const path = require('path');
 const express = require('express');
 const fs = require('fs-extra');
+const {
+	report
+} = require('../utils');
 
 module.exports = class Server {
 	constructor (config) {
@@ -96,7 +99,7 @@ module.exports = class Server {
 		});
 
 		this.app.use((error, req, res) => {
-			console.log(error);
+			report(error);
 			res.send(error);
 		});
 	}

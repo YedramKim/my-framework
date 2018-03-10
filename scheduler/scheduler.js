@@ -1,4 +1,7 @@
 const moment = require('moment-timezone');
+const {
+	report
+} = require('../utils');
 
 class Scheduler {
 	constructor (config, props) {
@@ -58,8 +61,8 @@ class ScheduleWorker {
 		try {
 			await this.work(this.props);
 		} catch (err) {
-			console.log('스케쥴 에러 발생');
-			console.log(err);
+			report('스케쥴 에러 발생');
+			report(err);
 		}
 	}
 }
