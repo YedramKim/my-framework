@@ -24,7 +24,6 @@ class Database {
 	async sync () {
 		await this.sequelize.authenticate();
 		await this._getSchemas();
-		await this._migrations();
 		this._createModels();
 		await this.sequelize.sync();
 	}
@@ -35,7 +34,7 @@ class Database {
 		this.schemas = (await fse.readdir(schemaRoots)).filter(schema => regExp.test(schema)).map(schema => require(path.join(schemaRoots, schema)));
 	}
 
-	async _migrations () {
+	async migrations () {
 		const Umzug = require('umzug');
 		const sequelize = this.sequelize;
 		const Sequelize = require('sequelize');

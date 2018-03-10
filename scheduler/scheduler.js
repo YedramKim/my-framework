@@ -1,3 +1,5 @@
+const moment = require('moment-timezone');
+
 class Scheduler {
 	constructor (config, props) {
 		this.config = config;
@@ -5,64 +7,59 @@ class Scheduler {
 	}
 
 	async onScheduler () {
-		const moment = require('moment-timezone');
 		const path = require('path');
 		const fse = require('fs-extra');
 
-		const timezoneOffsets = {
-			serviceLocal: moment.tz.zone(config.local),
-			server: (new Date()).getTimezoneOffset()
-		};
-
 		const schedulesPath = path.join(__dirname, 'schedules', process.env.PRODUCT);
+
 		this.schedules = (await fse.readdir(schedulesPath)).filter(schedule => /\.js$/.test(schedule)).map(schedule => require(`${schedulesPath}/${schedule}`));
 
-		await this._launchSchedules();
+		this.scheduleWorkers = this.schedules.map(schedule => new ScheduleWorker(schedule, this.props));
 
-		this.scheduleWorkers = this.schedules.map(schedule => new ScheduleWorker(schedule, this.props, timezoneOffsets));
-
-		this.scheduleWorkers.forEach(scheduleWorker => {
-			scheduleWorker.startWorking(timezoneOffsets).catch((err) => {
-				console.log('스케쥴러 시작 에러가 발생했습니다.');
-			});
-		});
+		this.scheduleWorkers.forEach(scheduleWorker => scheduleWorker.startSchedule(this.config));
 	}
 }
 
 class ScheduleWorker {
-	constructor (schedule, props, timezoneOffsets) {
+	constructor (schedule, props) {
 		this.scheduleData = schedule;
 		this.work = schedule.work;
 		this.props = props;
-		this.timezoneOffsets = timezoneOffsets;
+		
+		this.interval = schedule.baseFromZeroTime ? 24 : schedule.interval;
 	}
 
-	async startWorking(timezoneOffsets) {
-		if (schedule.baseFromZeroTime) {
-			this.interval = schedule.interval;
+	async startSchedule(schedulerConfig) {
+		const targetDate = moment.tz(schedulerConfig.local).hour(this.scheduleData.interval).toDate();
+		let timeoutTime;
+
+		await this.launchWork();
+
+		if (this.scheduleData.baseFromZeroTime) {
+			let currentTime = Date.now();
+			if (targetDate.getTime() < currentTime) {
+				targetDate.setDate(targetDate.getDate() + 1);
+			}
+			timeoutTime = targetDate.getTime() - Date.now();
 		} else {
-			this.interval = schedule.interval;
+			timeoutTime = this.interval * 60 * 60 * 1000;
 		}
 
-		this.scheduleTimer = setTimeout(() => {
-			this.working();
-		}, this.interval);
-		await this.work(this.props);
-	}
-
-	async working() {
-		this._resetTimer();
-	}
-
-	_resetTimer () {
-		if (this.baseFromZeroTime) {
-			setTimeout(() => {
-				this.working();
-			}, 24 * 60 * 60 * 1000);
-		} else {
-			setTimeout(() => {
-				this.working();
+		setTimeout(() => {
+			this.timer = setInterval(() => {
+				this.launchWork();
 			}, this.interval);
+		}, timeoutTime);
+		let check = new Date();
+		check.setTime(check.getTime() + timeoutTime);
+	}
+
+	async launchWork () {
+		try {
+			await this.work(this.props);
+		} catch (err) {
+			console.log('스케쥴 에러 발생');
+			console.log(err);
 		}
 	}
 }
