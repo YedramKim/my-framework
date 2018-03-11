@@ -1,5 +1,5 @@
 const path = require('path');
-const staticRoot = path.resolve(__dirname, '..', 'static');
+const staticRoot = path.resolve(__dirname, '..', '..', 'static');
 
 module.exports = (() => {
 	const baseConfig = {
