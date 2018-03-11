@@ -1,0 +1,23 @@
+{
+  "presets": [
+		["@babel/preset-env", {
+				"modules": false,
+				"targets": {
+					"chrome": 52
+				}
+			}],
+		"vue"
+  ],
+	"plugins": [
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread",
+		"@babel/plugin-syntax-jsx"
+	],
+  "env": {
+    "test": {
+      "presets": [
+        ["@babel/preset-env", { "targets": { "node": "current" }}]
+      ]
+    }
+  }
+}

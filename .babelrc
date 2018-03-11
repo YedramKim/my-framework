@@ -1,23 +1,26 @@
 {
   "presets": [
-		["@babel/preset-env", {
+		["env", {
 				"modules": false,
 				"targets": {
 					"chrome": 52
 				}
 			}],
-		"vue"
+		"vue",
+		"react"
   ],
 	"plugins": [
-		"@babel/plugin-proposal-class-properties",
-		"@babel/plugin-proposal-decorators",
-		"@babel/plugin-proposal-object-rest-spread",
-		"@babel/plugin-syntax-jsx"
+		"transform-class-properties",
+		"transform-object-rest-spread",
+		"syntax-jsx",
+		"transform-vue-jsx",
+		"jsx-v-model",
+		"jsx-event-modifiers"
 	],
   "env": {
     "test": {
       "presets": [
-        ["@babel/preset-env", { "targets": { "node": "current" }}]
+        ["env", { "targets": { "node": "current" }}]
       ]
     }
   }
