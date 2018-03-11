@@ -26,8 +26,20 @@ new Vue({
 	components: {
 		h1c: h1
 	},
-	render: (h) => h ? (<div>
-		<h1c color="gold">h1 gold</h1c>
-		<h1c color="red">h1 red</h1c>
-	</div>) : ''
+	methods: {
+		ab() {
+			console.log('성공~~~');
+		}
+	},
+	data() {
+		return {
+			a: 10
+		};
+	},
+	render (h) { // eslint-disable-line
+		return (<div>
+			<h1c nativeOnClick={this.ab} color="gold">h1 gold</h1c>
+			<h1c color="red">h1 red</h1c>
+		</div>);
+	}
 });
