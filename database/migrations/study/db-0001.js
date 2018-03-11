@@ -1,6 +1,5 @@
 module.exports = {
 	async up (queryInterface, database, types) {
-		console.log('뭔가??', types.NOW);
 		await queryInterface.createTable('items', {
 			id: {
 				type: types.INTEGER,

@@ -1,15 +1,18 @@
 {
   "presets": [
-		["@babel/preset-env", { "modules": false }],
-		"@babel/preset-es2015"
+		["@babel/preset-env", {
+				"modules": false,
+				"targets": {
+					"chrome": 52
+				}
+			}],
+		"vue"
   ],
 	"plugins": [
 		"@babel/plugin-proposal-class-properties",
 		"@babel/plugin-proposal-decorators",
 		"@babel/plugin-proposal-object-rest-spread",
-		"@babel/plugin-syntax-jsx",
-		"transform-vue-jsx",
-		"syntax-jsx"
+		"@babel/plugin-syntax-jsx"
 	],
   "env": {
     "test": {
