@@ -64,6 +64,7 @@
     "axios": "^0.18.0",
     "connect-redis": "^3.3.3",
     "cross-env": "^5.1.0",
+    "element-ui": "^2.2.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "fs-extra": "^4.0.2",
