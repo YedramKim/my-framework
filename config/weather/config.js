@@ -35,18 +35,18 @@ module.exports = (() => {
 		},
 		webpack: {
 			entry: {
-				main: path.join(__dirname, '..', '..', 'assets', 'study', 'index.js')
+				main: path.join(__dirname, '..', '..', 'assets', 'weather', 'index.js')
 			},
 			publicPath: '/static',
 			staticRoot,
 			layouts: {
-				main: path.join(__dirname, '..', '..', 'assets', 'study', 'html', 'main.html'),
-				login: path.join(__dirname, '..', '..', 'assets', 'study', 'html', 'login.html')
+				main: path.join(__dirname, '..', '..', 'assets', 'weather', 'html', 'main.html'),
+				login: path.join(__dirname, '..', '..', 'assets', 'weather', 'html', 'login.html')
 			}
 		},
 		database: {
 			host: 'localhost',
-			database: 'weather',
+			database: 'test1',
 			username: 'root',
 			password: '1234'
 		},
