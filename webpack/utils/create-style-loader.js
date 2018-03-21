@@ -14,6 +14,7 @@ module.exports = {
 		const cssLoader = {
 			loader: 'css-loader',
 			options: {
+				modules: true, // 이걸 넣고 dev.conf에도 넣으면 그쪽에서도 extract 사용 가능
 				minimize: isProduction,
 				sourcemMap: isProduction
 			}
