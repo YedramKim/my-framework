@@ -37,7 +37,7 @@ module.exports = config => {
 					exclude: /node_modules/,
 					options: {
 						cssSourceMap: isProduction,
-						preserveWhitespace: true,
+						preserveWhitespace: false,
 						extractCSS: isProduction,
 						loaders: {
 							css: createStyleLoader.stack('css', true),
