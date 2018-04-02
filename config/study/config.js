@@ -46,7 +46,7 @@ module.exports = (() => {
 		},
 		database: {
 			host: 'localhost',
-			database: 'weather',
+			database: 'nogada',
 			username: 'root',
 			password: '1234'
 		},

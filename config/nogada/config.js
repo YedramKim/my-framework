@@ -35,13 +35,13 @@ module.exports = (() => {
 		},
 		webpack: {
 			entry: {
-				main: path.join(__dirname, '..', '..', 'assets', 'weather', 'index.js')
+				main: path.join(__dirname, '..', '..', 'assets', 'nogada', 'index.js')
 			},
 			publicPath: '/static',
 			staticRoot,
 			layouts: {
-				main: path.join(__dirname, '..', '..', 'assets', 'weather', 'html', 'main.html'),
-				login: path.join(__dirname, '..', '..', 'assets', 'weather', 'html', 'login.html')
+				main: path.join(__dirname, '..', '..', 'assets', 'nogada', 'html', 'main.html'),
+				login: path.join(__dirname, '..', '..', 'assets', 'nogada', 'html', 'login.html')
 			}
 		},
 		database: {
