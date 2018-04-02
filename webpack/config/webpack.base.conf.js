@@ -42,6 +42,7 @@ module.exports = config => {
 						loaders: {
 							css: createStyleLoader.stack('css', true),
 							less: createStyleLoader.stack('less', true),
+							scss: createStyleLoader.stack('sass', true),
 							ts: tsLoaderConfig
 						},
 						transformToRequire: {
@@ -73,6 +74,14 @@ module.exports = config => {
 				{
 					test: /\.css$/,
 					use: createStyleLoader.stack('css', false)
+				},
+				{
+					test: /\.less$/,
+					use: createStyleLoader.stack('less', false)
+				},
+				{
+					test: /\.scss$/,
+					use: createStyleLoader.stack('sass', false)
 				}
 			]
 		},
