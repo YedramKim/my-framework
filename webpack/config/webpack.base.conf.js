@@ -49,8 +49,7 @@ module.exports = config => {
 							img: 'src',
 							image: 'xlink:href',
 							video: 'src'
-						},
-						postcss: [require('postcss-cssnext')()]
+						}
 					}
 				},
 				{

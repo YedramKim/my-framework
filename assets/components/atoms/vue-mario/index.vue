@@ -2,12 +2,7 @@
 	<div class="vue-mario">
 		<div
 			class="mario"
-			:class="{
-				default: avatar === '',
-				mexico: avatar === 'mexico',
-				amiibo: avatar === 'amiibo',
-				winter: avatar === 'winter'
-			}"></div>
+			:class="['mexico', 'amiibo', 'winter'].indexOf(avatar) !== 1 ? avatar : ''"></div>
 	</div>
 </template>
 

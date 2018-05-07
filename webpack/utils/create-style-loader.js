@@ -6,19 +6,32 @@ const extract = new ExtractTextPlugin({
 module.exports = {
 	stack(lang, isVue, options = {}) {
 		const isProduction = process.env.NODE_ENV === 'production';
-		options = Object.assign(options, {
+		options = {
+			...options,
 			sourceMap: isProduction
-		});
+		};
 
 		const styleLoader = isVue ? 'vue-style-loader' : 'style-loader';
-		const cssLoader = {
-			loader: 'css-loader',
-			options: {
-				minimize: isProduction,
-				sourcemMap: isProduction
+		const loaders = [
+			{
+				loader: 'css-loader',
+				options: {
+					minimize: isProduction,
+					sourcemMap: isProduction
+				}
+			},
+			{
+				loader: 'postcss-loader',
+				options: {
+					plugins: [
+						require('postcss-cssnext')({
+							warnForDuplicates: false
+						}),
+						require('cssnano')()
+					]
+				}
 			}
-		};
-		const loaders = [cssLoader];
+		];
 		if (lang && lang !== 'css') {
 			loaders.push({
 				loader: `${lang}-loader`,
