@@ -6,15 +6,11 @@
   "author": "YedarmKim <oncoder@naver.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development cross-env PRODUCT=study node index.js",
-    "beta": "cross-env NODE_ENV=beta cross-env PRODUCT=study node index.js",
-    "production": "cross-env NODE_ENV=production cross-env PRODUCT=study node index.js",
-    "test": "cross-env NODE_ENV=test cross-env PRODUCT=study jest",
-    "nogada-dev": "cross-env NODE_ENV=development cross-env PRODUCT=nogada node index.js",
-    "nogada-beta": "cross-env NODE_ENV=beta cross-env PRODUCT=nogada node index.js",
-    "nogada-production": "cross-env NODE_ENV=production cross-env PRODUCT=nogada node index.js",
-    "nogada-test": "cross-env NODE_ENV=test cross-env PRODUCT=nogada jest",
-    "test-snapshot-update": "cross-env NODE_ENV=test cross-env PRODUCT=study jest --updateSnapshot",
+    "dev": "cross-env NODE_ENV=development cross-env node index.js",
+    "beta": "cross-env NODE_ENV=beta cross-env node index.js",
+    "production": "cross-env NODE_ENV=production cross-env node index.js",
+    "test": "cross-env NODE_ENV=test cross-env jest",
+    "test-snapshot-update": "cross-env NODE_ENV=test cross-env jest --updateSnapshot",
     "eslint": "eslint \"**/*.js\""
   },
   "devDependencies": {

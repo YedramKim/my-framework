@@ -13,7 +13,7 @@ class Scheduler {
 		const path = require('path');
 		const fse = require('fs-extra');
 
-		const schedulesPath = path.join(__dirname, 'schedules', process.env.PRODUCT);
+		const schedulesPath = path.join(__dirname, 'schedules');
 
 		this.schedules = (await fse.readdir(schedulesPath)).filter(schedule => /\.js$/.test(schedule)).map(schedule => require(`${schedulesPath}/${schedule}`));
 

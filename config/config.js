@@ -1,5 +1,5 @@
 const path = require('path');
-const staticRoot = path.resolve(__dirname, '..', '..', 'static');
+const staticRoot = path.resolve(__dirname, '..', 'static');
 
 module.exports = (() => {
 	const baseConfig = {
@@ -35,18 +35,18 @@ module.exports = (() => {
 		},
 		webpack: {
 			entry: {
-				main: path.join(__dirname, '..', '..', 'assets', 'nogada', 'index.js')
+				main: path.join(__dirname, '..', 'assets', 'index.js')
 			},
 			publicPath: '/static',
 			staticRoot,
 			layouts: {
-				main: path.join(__dirname, '..', '..', 'assets', 'nogada', 'html', 'main.html'),
-				login: path.join(__dirname, '..', '..', 'assets', 'nogada', 'html', 'login.html')
+				main: path.join(__dirname, '..', 'assets', 'html', 'main.html'),
+				login: path.join(__dirname, '..', 'assets', 'html', 'login.html')
 			}
 		},
 		database: {
 			host: 'localhost',
-			database: 'test1',
+			database: 'nogada',
 			username: 'root',
 			password: '1234'
 		},

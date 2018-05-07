@@ -52,7 +52,7 @@ module.exports = class Server {
 	}
 
 	async _setRoutes () {
-		const routesPath = path.join(__dirname, 'routes', process.env.PRODUCT);
+		const routesPath = path.join(__dirname, 'routes');
 		const routeFolders = await fs.readdir(routesPath);
 		const dontGo404Exeption = () => {};
 		const extReg = /\.js$/;
@@ -71,7 +71,7 @@ module.exports = class Server {
 					pre,
 					post,
 					route
-				} = require(`./routes/${process.env.PRODUCT}/${routeFolder}/${routeFile}`);
+				} = require(`./routes/${routeFolder}/${routeFile}`);
 				const preMiddlewares = (pre || []).map(middlewareData => this._getMiddleware(middlewareData));
 				const postMiddlewares = (post || []).map(middlewareData => this._getMiddleware(middlewareData));
 

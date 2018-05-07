@@ -2,10 +2,6 @@ if (!process.env.NODE_ENV) {
 	process.env.NODE_ENV = 'development';
 }
 
-if (!process.env.PRODUCT) {
-	process.env.PRODUCT = 'study';
-}
-
 const {
 	processFork,
 	report
@@ -16,7 +12,7 @@ processFork({
 	async createdWorker () {},
 	async master () {
 		try {
-			const config = require(`./config/${process.env.PRODUCT}/config`)();
+			const config = require(`./config/config`)();
 
 			const Webpack = require('./webpack/webpack');
 			if (['production', 'beta'].indexOf(process.env.NODE_ENV) !== -1) {

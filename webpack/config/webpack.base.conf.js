@@ -96,7 +96,7 @@ module.exports = config => {
 			extensions: ['.js', '.ts', '.vue', '.json'],
 			alias: {
 				'vue$': 'vue/dist/vue.esm.js',
-				'@asset': path.resolve(__dirname, '..', '..', 'assets', process.env.PRODUCT)
+				'@asset': path.resolve(__dirname, '..', '..', 'assets')
 			}
 		}
 	};
