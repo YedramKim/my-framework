@@ -4,7 +4,7 @@ Vue.use(VueRouter);
 
 const routes = [];
 
-export default new VueRouter({
+export default () => new VueRouter({
 	routes,
 	mode: 'history',
 	base: '/app'
