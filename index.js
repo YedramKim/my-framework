@@ -19,21 +19,21 @@ processFork({
 			const config = require(`./config/${process.env.PRODUCT}/config`)();
 
 			const Webpack = require('./webpack/webpack');
-			const Database = require('./database/database');
-			const Scheduler = require('./scheduler/scheduler');
-
 			if (['production', 'beta'].indexOf(process.env.NODE_ENV) !== -1) {
 				const bundler = new Webpack(config.webpack);
 				await bundler.build();
 			}
 
-			const database = new Database(config.database);
-			await database.migrations();
+			// const Database = require('./database/database');
+			// const Scheduler = require('./scheduler/scheduler');
 
-			const scheduler = new Scheduler(config.scheduler, {
-				database
-			});
-			await scheduler.onScheduler();
+			// const database = new Database(config.database);
+			// await database.migrations();
+
+			// const scheduler = new Scheduler(config.scheduler, {
+			// 	database
+			// });
+			// await scheduler.onScheduler();
 
 			return {
 				config
