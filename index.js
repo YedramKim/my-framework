@@ -12,7 +12,7 @@ processFork({
 	async createdWorker () {},
 	async master () {
 		try {
-			const config = require(`./config/config`)();
+			const config = require('./config/config')();
 
 			const Webpack = require('./webpack/webpack');
 			if (['production', 'beta'].indexOf(process.env.NODE_ENV) !== -1) {

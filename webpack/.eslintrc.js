@@ -40,7 +40,10 @@ module.exports = {
 			"1tbs"
 		],
 		"no-unused-vars": [
-			"error"
+			2
+		],
+		"no-undef": [
+			2
 		]
 	},
 	"plugins": [

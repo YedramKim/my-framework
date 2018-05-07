@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const createStyleLoader = require('./utils/create-style-loader');
 const {
 	report
 } = require('../utils');
