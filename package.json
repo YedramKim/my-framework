@@ -11,6 +11,7 @@
     "production": "cross-env NODE_ENV=production cross-env node index.js",
     "test": "cross-env NODE_ENV=test cross-env jest",
     "test-snapshot-update": "cross-env NODE_ENV=test cross-env jest --updateSnapshot",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "eslint": "eslint \"**/*.js\""
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "@babel/plugin-syntax-jsx": "^7.0.0-beta.40",
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/preset-react": "^7.0.0-beta.40",
+    "@storybook/vue": "^3.4.4",
     "@types/jest": "^22.1.1",
     "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.26.0",

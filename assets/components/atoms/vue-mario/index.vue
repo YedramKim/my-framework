@@ -11,8 +11,7 @@
 		name: 'vue-mario',
 		props: {
 			avatar: {
-				type: String,
-				default: 'winter'
+				type: String
 			}
 		},
 		watch: {
@@ -139,11 +138,8 @@
 		display: inline-block;
 		width: 36px;
 		height: 64px;
-
-		&.default {
-			background-image: url(../../../img/top_mario_walk.png);
-			animation-name: mario-animation-default;
-		}
+		background-image: url(../../../img/top_mario_walk.png);
+		animation-name: mario-animation-default;
 
 		&.mexico {
 			width: 38px;
