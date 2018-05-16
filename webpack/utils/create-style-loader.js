@@ -4,14 +4,14 @@ const extract = new ExtractTextPlugin({
 });
 
 module.exports = {
-	stack(lang, isVue, options = {}) {
+	stack(lang, options = {}) {
 		const isProduction = process.env.NODE_ENV === 'production';
 		options = {
 			...options,
 			sourceMap: isProduction
 		};
 
-		const styleLoader = isVue ? 'vue-style-loader' : 'style-loader';
+		const styleLoader = 'vue-style-loader';
 		const loaders = [
 			{
 				loader: 'css-loader',
@@ -24,10 +24,10 @@ module.exports = {
 				loader: 'postcss-loader',
 				options: {
 					plugins: [
-						// require('postcss-cssnext')({
-						// 	warnForDuplicates: false
-						// }),
-						// require('cssnano')()
+						require('postcss-cssnext')({
+							warnForDuplicates: false
+						}),
+						require('cssnano')()
 					]
 				}
 			}

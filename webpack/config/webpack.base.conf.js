@@ -2,6 +2,7 @@ module.exports = config => {
 	const path = require('path');
 	const webpack = require('webpack');
 	const createStyleLoader = require('../utils/create-style-loader');
+	const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 	const isProduction = process.env.NODE_ENV === 'production';
 
@@ -36,14 +37,8 @@ module.exports = config => {
 					loader: 'vue-loader',
 					exclude: /node_modules/,
 					options: {
-						cssSourceMap: isProduction,
-						preserveWhitespace: false,
-						extractCSS: isProduction,
-						loaders: {
-							css: createStyleLoader.stack('css', true),
-							less: createStyleLoader.stack('less', true),
-							scss: createStyleLoader.stack('sass', true),
-							ts: tsLoaderConfig
+						compilerOptions: {
+							preserveWhitespace: false
 						},
 						transformToRequire: {
 							img: 'src',
@@ -68,23 +63,28 @@ module.exports = config => {
 				{
 					test: /\.(js)$/,
 					loader: 'babel-loader',
-					exclude: /node_modules/
+					exclude: file => (
+						/node_modules/.test(file) &&
+						!/\.vue\.js/.test(file)
+					)
+					// exclude: /node_modules/
 				},
 				{
 					test: /\.css$/,
-					use: createStyleLoader.stack('css', false)
+					use: createStyleLoader.stack('css')
 				},
 				{
 					test: /\.less$/,
-					use: createStyleLoader.stack('less', false)
+					use: createStyleLoader.stack('less')
 				},
 				{
 					test: /\.scss$/,
-					use: createStyleLoader.stack('sass', false)
+					use: createStyleLoader.stack('sass')
 				}
 			]
 		},
 		plugins: [
+			new VueLoaderPlugin(),
 			new webpack.DefinePlugin({
 				'process.env': {
 					NODE_ENV: JSON.stringify(process.env.NODE_ENV)
