@@ -23,15 +23,15 @@ module.exports = config => {
 		},
 		module: {
 			rules: [
-				{
-					test: /\.(vue|js)$/,
-					enforce: 'pre',
-					exclude: /node_modules/,
-					loader: 'eslint-loader',
-					options: {
-						configFile: path.join(__dirname, '..', '.eslintrc.js')
-					}
-				},
+				// {
+				// 	test: /\.(vue|js)$/,
+				// 	enforce: 'pre',
+				// 	exclude: /node_modules/,
+				// 	loader: 'eslint-loader',
+				// 	options: {
+				// 		configFile: path.join(__dirname, '..', '.eslintrc.js')
+				// 	}
+				// },
 				{
 					test: /\.vue$/,
 					loader: 'vue-loader',

@@ -1,5 +1,5 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extract = new ExtractTextPlugin({
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const plugin = new MiniCssExtractPlugin({
 	filename: 'style.css'
 });
 
@@ -11,12 +11,11 @@ module.exports = {
 			sourceMap: isProduction
 		};
 
-		const styleLoader = 'vue-style-loader';
+		const styleLoader = isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader';
 		const loaders = [
 			{
 				loader: 'css-loader',
 				options: {
-					minimize: isProduction,
 					sourcemMap: isProduction
 				}
 			},
@@ -26,8 +25,7 @@ module.exports = {
 					plugins: [
 						require('postcss-cssnext')({
 							warnForDuplicates: false
-						}),
-						require('cssnano')()
+						})
 					]
 				}
 			}
@@ -39,14 +37,7 @@ module.exports = {
 			});
 		}
 
-		if (isProduction) {
-			return extract.extract({
-				use: loaders,
-				fallback: styleLoader
-			});
-		} else {
-			return [styleLoader, ...loaders];
-		}
+		return [styleLoader, ...loaders]
 	},
-	extract
+	plugin
 };

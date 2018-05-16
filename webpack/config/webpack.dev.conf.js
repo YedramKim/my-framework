@@ -5,7 +5,9 @@ module.exports = config => {
 	const Jarvis = require('webpack-jarvis');
 
 	const devConfig = merge(baseConfig, {
-		devtool: 'cheap-module-eval-source-map',
+		mode: 'development',
+		// devtool: 'cheap-module-eval-source-map',
+		devtool: 'inline-source-map',
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
 			new Jarvis({
