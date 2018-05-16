@@ -24,10 +24,10 @@ module.exports = {
 				loader: 'postcss-loader',
 				options: {
 					plugins: [
-						require('postcss-cssnext')({
-							warnForDuplicates: false
-						}),
-						require('cssnano')()
+						// require('postcss-cssnext')({
+						// 	warnForDuplicates: false
+						// }),
+						// require('cssnano')()
 					]
 				}
 			}

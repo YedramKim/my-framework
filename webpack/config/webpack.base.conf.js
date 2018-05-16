@@ -40,7 +40,7 @@ module.exports = config => {
 						preserveWhitespace: false,
 						extractCSS: isProduction,
 						loaders: {
-							// css: createStyleLoader.stack('css', true),
+							css: createStyleLoader.stack('css', true),
 							less: createStyleLoader.stack('less', true),
 							scss: createStyleLoader.stack('sass', true),
 							ts: tsLoaderConfig

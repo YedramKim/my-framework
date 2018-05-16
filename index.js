@@ -47,14 +47,14 @@ processFork({
 			} = data;
 	
 			const Server = require('./server/server');
-			// const Database = require('./database/database');
 			const Webpack = require('./webpack/webpack');
 	
 			const server = new Server(config.server);
 	
-			// const database = new Database(config.database);
-			// await database.sync();
-			// server.setDataToServer('database', database);
+			const Database = require('./database/database');
+			const database = new Database(config.database);
+			await database.sync();
+			server.setDataToServer('database', database);
 	
 			const bundler = new Webpack(config.webpack);
 			await bundler.webpackCompile(server);
