@@ -11,6 +11,7 @@ import 'vuetify/dist/vuetify.min.css';
 
 // 기본 설정
 import './style/main.css';
+import liveCoding from './components/atoms/live-coding.vue';
 
 export default () => {
 	const store = createStore();
@@ -19,7 +20,7 @@ export default () => {
 		app: new Vue({
 			store,
 			router,
-			template: `<div>Hello</div>`
+			render: h => h(liveCoding)
 		}),
 		store,
 		router
