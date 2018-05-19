@@ -18,7 +18,8 @@ module.exports = config => {
 				minify: {
 					minifyCSS: true,
 					minifyJS: true,
-					collapseWhitespace: true
+					collapseWhitespace: true,
+					removeComments: true
 				}
 			}));
 		}
