@@ -32,7 +32,7 @@ class Bundler {
 			stats: {
 				colors: true
 			},
-			writeToDisk: true
+			writeToDisk: file => /\.html$/.test(file)
 		});
 		server.useMiddleware(devMiddleware);
 
