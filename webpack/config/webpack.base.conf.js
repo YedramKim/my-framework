@@ -3,6 +3,7 @@ module.exports = config => {
 	const webpack = require('webpack');
 	const createStyleLoader = require('../utils/create-style-loader');
 	const VueLoaderPlugin = require('vue-loader/lib/plugin');
+	const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 	const isProduction = process.env.NODE_ENV === 'production';
 
@@ -13,6 +14,25 @@ module.exports = config => {
 			appendTsSuffixTo: [/\.vue$/]
 		}
 	};
+
+	const layouts = (() => {
+		const layouts = [];
+		for (let layout in config.layouts) {
+			layouts.push(new HtmlWebpackPlugin({
+				alwaysWriteToDisk: true,
+				inject: true,
+				template: config.layouts[layout],
+				filename: `${layout}.html`,
+				minify: {
+					minifyCSS: true,
+					minifyJS: true,
+					collapseWhitespace: true,
+					removeComments: true
+				}
+			}));
+		}
+		return layouts;
+	})();
 
 	return {
 		entry: config.entry,
@@ -84,6 +104,7 @@ module.exports = config => {
 			]
 		},
 		plugins: [
+			...layouts,
 			new VueLoaderPlugin(),
 			new webpack.DefinePlugin({
 				'process.env': {

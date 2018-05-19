@@ -37,7 +37,7 @@ module.exports = {
 			});
 		}
 
-		return [styleLoader, ...loaders]
+		return [styleLoader, ...loaders];
 	},
 	plugin
 };

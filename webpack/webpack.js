@@ -22,42 +22,25 @@ class Bundler {
 		} 
 	}
 
-	async applyServer(server) {
+	async _applyServer(server) {
 		const webpackConfig = this._getconfigure('development');
 		const compile = webpack(webpackConfig);
 
-		server.useMiddleware(require('webpack-dev-middleware')(compile, {
+		const devMiddleware = require('webpack-dev-middleware')(compile, {
 			noInfo: true,
 			publicPath: this.config.publicPath,
 			stats: {
 				colors: true
-			}
-		}));
+			},
+			writeToDisk: true
+		});
+		server.useMiddleware(devMiddleware);
 
-		server.useMiddleware(require('webpack-hot-middleware')(compile, {
+		const hotMiddleware = require('webpack-hot-middleware')(compile, {
 			heartbeat: 500,
 			log: report
-		}));
-
-		await this._buildHTML();
-	}
-
-	async _buildHTML () {
-		const fse = require('fs-extra');
-		const cheerio = require('cheerio');
-
-		const { layouts, publicPath, staticRoot, entry } = this.config;
-		for (let layout in layouts) {
-			const layoutFile = await fse.readFile(layouts[layout]);
-			const $ = cheerio.load(layoutFile);
-			const body = $('body');
-			for (let js in entry) {
-				body.append(`<script src="${publicPath}/${js}.js"></script>`);
-			}
-	
-			await fse.ensureDir(staticRoot);
-			await fse.writeFile(path.join(staticRoot, `${layout}.html`), $.html());
-		}
+		});
+		server.useMiddleware(hotMiddleware);
 	}
 
 	async build() {
@@ -92,7 +75,7 @@ class Bundler {
 				break;
 			case 'development':
 			default:
-				await this.applyServer(server);
+				await this._applyServer(server);
 				break;
 		}
 	}
